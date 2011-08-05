@@ -61,7 +61,7 @@
 	textView.returnKeyType = UIReturnKeyGo; //just as an example
 	textView.font = [UIFont boldSystemFontOfSize:15.0f];
 	textView.delegate = self;
-    //textView.text = @"test\n\ntest";
+    textView.text = @"test\n\ntest";
 	//textView.animateHeightChange = NO; //turns off animation
 		
 	[self.view addSubview:textView];

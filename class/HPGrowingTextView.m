@@ -33,7 +33,6 @@
 @synthesize internalTextView;
 @synthesize delegate;
 
-@synthesize text;
 @synthesize font;
 @synthesize textColor;
 @synthesize textAlignment; 
@@ -76,8 +75,15 @@
 -(void)sizeToFit
 {
 	CGRect r = self.frame;
-	r.size.height = minHeight;
-	self.frame = r;
+    
+    // check if the text is available in text view or not, if it is available, no need to set it to minimum lenth, it could vary as per the text length
+    // fix from Ankit Thakur
+    if ([self.text length] > 0) {
+        return;
+    } else {
+        r.size.height = minHeight;
+        self.frame = r;
+    }
 }
 
 -(void)setFrame:(CGRect)aframe
@@ -251,14 +257,18 @@
 #pragma mark UITextView properties
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void)setText:(NSString *)atext
+-(void)setText:(NSString *)newText
 {
-	internalTextView.text= atext;
+    internalTextView.text = newText;
+    
+    // include this line to analyze the height of the textview.
+    // fix from Ankit Thakur
+    [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
 }
-//
--(NSString*)text
+
+-(NSString*) text
 {
-	return internalTextView.text;
+    return internalTextView.text;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
