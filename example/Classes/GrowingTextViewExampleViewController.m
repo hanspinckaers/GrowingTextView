@@ -55,32 +55,56 @@
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 	self.view.backgroundColor = [UIColor grayColor];
 	
-	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    containerView.backgroundColor = [UIColor whiteColor];
+    
+	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(5, 3, 308, 100)];
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 4;
 	textView.returnKeyType = UIReturnKeyGo; //just as an example
 	textView.font = [UIFont boldSystemFontOfSize:15.0f];
 	textView.delegate = self;
+    
     //textView.text = @"test\n\ntest";
 	//textView.animateHeightChange = NO; //turns off animation
 		
-	[self.view addSubview:textView];
+	[self.view addSubview:containerView];
+    
 	[textView sizeToFit];
 	
+    UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
+    UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+    UIImageView *entryImageView = [[[UIImageView alloc] initWithImage:entryBackground] autorelease];
+    entryImageView.frame = CGRectMake(5, 0, 315, 100);
+        
+    entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            
+    UIImage *rawBackground = [UIImage imageNamed:@"MessageEntryBackground.png"];
+    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+    UIImageView *imageView = [[[UIImageView alloc] initWithImage:background] autorelease];
+    imageView.frame = CGRectMake(0, 0, 315, 100);
+    
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    // view hierachy
+    [containerView addSubview:imageView];
+    [containerView addSubview:textView];
+    [containerView addSubview:entryImageView];
+
 	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	doneBtn.frame = CGRectMake(30, 30, 260, 80);
 	[doneBtn setTitle:@"Done" forState:UIControlStateNormal];
 	[doneBtn addTarget:self action:@selector(resignTextView) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:doneBtn];
 		
-	CGRect r = textView.frame;
+	CGRect r = containerView.frame;
+    r.size.height = 40;
 	r.origin.y = self.view.frame.size.height - r.size.height;
-	textView.frame = r;		
+	containerView.frame = r;		
 }
 
 -(void)resignTextView
 {
-	NSLog(@"???");
 	[textView resignFirstResponder];
 }
 
@@ -94,8 +118,8 @@
 	NSInteger kbSizeH = keyboardBounds.size.height;
 		
 	// get a rect for the textView frame
-	CGRect textViewFrame = textView.frame;
-	textViewFrame.origin.y -= kbSizeH;
+	CGRect containerFrame = containerView.frame;
+	containerFrame.origin.y -= kbSizeH;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
@@ -103,7 +127,7 @@
     [UIView setAnimationDuration:0.3f];
 	
 	// set views with new info
-	textView.frame = textViewFrame;
+	containerView.frame = containerFrame;
 	
 	// commit animations
 	[UIView commitAnimations];
@@ -118,8 +142,8 @@
 	NSInteger kbSizeH = keyboardBounds.size.height;
 	
 	// get a rect for the textView frame
-	CGRect textViewFrame = textView.frame;
-	textViewFrame.origin.y += kbSizeH;
+	CGRect containerFrame = containerView.frame;
+	containerFrame.origin.y += kbSizeH;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
@@ -127,7 +151,7 @@
     [UIView setAnimationDuration:0.3f];
 	
 	// set views with new info
-	textView.frame = textViewFrame;
+	containerView.frame = containerFrame;
 	
 	// commit animations
 	[UIView commitAnimations];
@@ -135,11 +159,12 @@
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
-	float diff = (textView.frame.size.height - height);
+    float diff = (growingTextView.frame.size.height - height);
 		
-	CGRect r = textView.frame;
-	r.origin.y += diff;
-	textView.frame = r;
+	CGRect r = containerView.frame;
+    r.size.height -= diff;
+    r.origin.y += diff;
+	containerView.frame = r;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -156,7 +181,8 @@
 
 
 - (void)dealloc {
-	[textView release];
+    [textView release];
+	[containerView release];
     [super dealloc];
 }
 

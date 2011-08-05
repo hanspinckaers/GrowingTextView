@@ -29,7 +29,8 @@
 #import "HPGrowingTextView.h"
 
 @interface GrowingTextViewExampleViewController : UIViewController <HPGrowingTextViewDelegate>{
-	HPGrowingTextView *textView;
+	UIView *containerView;
+    HPGrowingTextView *textView;
 }
 
 -(void)resignTextView;
