@@ -94,72 +94,69 @@
 
 -(void)setMaxNumberOfLines:(int)n
 {
-	UITextView *test = [[HPTextViewInternal alloc] init];	
-	test.font = internalTextView.font;
-	test.hidden = YES;
-	
-	NSMutableString *newLines = [NSMutableString string];
-	
-	if(n == 1){
-		[newLines appendString:@"-"];
-	} else {
-		for(int i = 1; i<n; i++){
-			[newLines appendString:@"\n"];
-		}
-	}
-	
-	test.text = newLines;
-	
-	
-	[self addSubview:test];
-
-	maxHeight = test.contentSize.height;
-	maxNumberOfLines = n;
-	
-	[test removeFromSuperview];
-	[test release];	
+    // Use internalTextView for height calculations, thanks to Gwynne <http://blog.darkrainfall.org/>
+    NSString *saveText = internalTextView.text, *newText = @"-";
+    
+    internalTextView.delegate = nil;
+    internalTextView.hidden = YES;
+    
+    for (int i = 2; i < n; ++i)
+        newText = [newText stringByAppendingString:@"\n|W|"];
+    
+    internalTextView.text = newText;
+    
+    minHeight = internalTextView.contentSize.height;
+    
+    internalTextView.text = saveText;
+    internalTextView.hidden = NO;
+    internalTextView.delegate = self;
+    
+    [self sizeToFit];
+    
+    maxNumberOfLines = n;
 }
 
 -(void)setMinNumberOfLines:(int)m
 {
-	
-	UITextView *test = [[HPTextViewInternal alloc] init];	
-	test.font = internalTextView.font;
-	test.hidden = YES;
-	
-	NSMutableString *newLines = [NSMutableString string];
- 
-	if(m == 1){
-		[newLines appendString:@"-"];
-	} else {
-		for(int i = 1; i<m; i++){
-			[newLines appendString:@"\n"];
-		}
-	}
-	
-	test.text = newLines;
-	
-	
-	[self addSubview:test];
-	
-	minHeight = test.contentSize.height;
-			
-	[self sizeToFit];	
-	minNumberOfLines = m;
-	
-	[test removeFromSuperview];
-	[test release];
+	// Use internalTextView for height calculations, thanks to Gwynne <http://blog.darkrainfall.org/>
+    NSString *saveText = internalTextView.text, *newText = @"-";
+    
+    internalTextView.delegate = nil;
+    internalTextView.hidden = YES;
+    
+    for (int i = 2; i < m; ++i)
+        newText = [newText stringByAppendingString:@"\n|W|"];
+    
+    internalTextView.text = newText;
+    
+    minHeight = internalTextView.contentSize.height;
+    
+    internalTextView.text = saveText;
+    internalTextView.hidden = NO;
+    internalTextView.delegate = self;
+    
+    [self sizeToFit];
+    
+    minNumberOfLines = m;
 }
 
 
 - (void)textViewDidChange:(UITextView *)textView
-{
+{	
 	//size of content, so we can set the frame of self
 	NSInteger newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
 	 
 	if (internalTextView.frame.size.height != newSizeH)
 	{
+        // [fixed] Pasting too much text into the view failed to fire the height change, 
+        // thanks to Gwynne <http://blog.darkrainfall.org/>
+        
+        if (newSizeH > maxHeight && internalTextView.frame.size.height <= maxHeight)
+        {
+            newSizeH = maxHeight;
+        }
+        
 		if (newSizeH <= maxHeight)
 		{
 			if(animateHeightChange){
@@ -182,9 +179,14 @@
 			internalTextViewFrame.origin.x = 0;
 			internalTextView.frame = internalTextViewFrame;
 			
+            // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
+            // thanks to Gwynne <http://blog.darkrainfall.org/>
+            
 			if(animateHeightChange){
 				[UIView commitAnimations];
-			}			
+			} else if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
+                [delegate growingTextView:self didChangeHeight:newSizeH];
+            }		
 		}
 		
 				
