@@ -426,4 +426,15 @@
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (BOOL)becomeFirstResponder
+{
+    return [self.internalTextView becomeFirstResponder];
+}
+
+- (BOOL)resignFirstResponder
+{
+    return [self.internalTextView resignFirstResponder];
+}
+
 @end
