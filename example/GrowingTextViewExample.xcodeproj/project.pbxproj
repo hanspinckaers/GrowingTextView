@@ -14,8 +14,8 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* GrowingTextViewExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* GrowingTextViewExampleViewController.m */; };
-		3A2C274411DBF6390037FB64 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C274111DBF6390037FB64 /* HPGrowingTextView.m */; };
-		3A2C274511DBF6390037FB64 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2C274311DBF6390037FB64 /* HPTextViewInternal.m */; };
+		3A5B30CE13EC633200DB7A65 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B30CB13EC633200DB7A65 /* HPGrowingTextView.m */; };
+		3A5B30CF13EC633200DB7A65 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B30CD13EC633200DB7A65 /* HPTextViewInternal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +30,10 @@
 		28D7ACF70DDB3853001CB0EB /* GrowingTextViewExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextViewExampleViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GrowingTextViewExample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextViewExample_Prefix.pch; sourceTree = "<group>"; };
-		3A2C274011DBF6390037FB64 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
-		3A2C274111DBF6390037FB64 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
-		3A2C274211DBF6390037FB64 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
-		3A2C274311DBF6390037FB64 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		3A5B30CA13EC633200DB7A65 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		3A5B30CB13EC633200DB7A65 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		3A5B30CC13EC633200DB7A65 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		3A5B30CD13EC633200DB7A65 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* GrowingTextViewExample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GrowingTextViewExample-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,7 +54,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3A09CE6511DBF04800263BEC /* GrowingTextView */,
+				3A5B30C913EC633200DB7A65 /* HPGrowingTextView */,
 				1D3623240D0F684500981E51 /* GrowingTextViewExampleAppDelegate.h */,
 				1D3623250D0F684500981E51 /* GrowingTextViewExampleAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* GrowingTextViewExampleViewController.h */,
@@ -111,15 +111,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3A09CE6511DBF04800263BEC /* GrowingTextView */ = {
+		3A5B30C913EC633200DB7A65 /* HPGrowingTextView */ = {
 			isa = PBXGroup;
 			children = (
-				3A2C274011DBF6390037FB64 /* HPGrowingTextView.h */,
-				3A2C274111DBF6390037FB64 /* HPGrowingTextView.m */,
-				3A2C274211DBF6390037FB64 /* HPTextViewInternal.h */,
-				3A2C274311DBF6390037FB64 /* HPTextViewInternal.m */,
+				3A5B30CA13EC633200DB7A65 /* HPGrowingTextView.h */,
+				3A5B30CB13EC633200DB7A65 /* HPGrowingTextView.m */,
+				3A5B30CC13EC633200DB7A65 /* HPTextViewInternal.h */,
+				3A5B30CD13EC633200DB7A65 /* HPTextViewInternal.m */,
 			);
-			name = GrowingTextView;
+			name = HPGrowingTextView;
+			path = ../../class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,8 +186,8 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* GrowingTextViewExampleAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* GrowingTextViewExampleViewController.m in Sources */,
-				3A2C274411DBF6390037FB64 /* HPGrowingTextView.m in Sources */,
-				3A2C274511DBF6390037FB64 /* HPTextViewInternal.m in Sources */,
+				3A5B30CE13EC633200DB7A65 /* HPGrowingTextView.m in Sources */,
+				3A5B30CF13EC633200DB7A65 /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +205,7 @@
 				GCC_PREFIX_HEADER = GrowingTextViewExample_Prefix.pch;
 				INFOPLIST_FILE = "GrowingTextViewExample-Info.plist";
 				PRODUCT_NAME = GrowingTextViewExample;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -216,6 +218,7 @@
 				GCC_PREFIX_HEADER = GrowingTextViewExample_Prefix.pch;
 				INFOPLIST_FILE = "GrowingTextViewExample-Info.plist";
 				PRODUCT_NAME = GrowingTextViewExample;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
