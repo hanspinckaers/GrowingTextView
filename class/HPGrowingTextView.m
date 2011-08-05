@@ -31,8 +31,6 @@
 
 @implementation HPGrowingTextView
 @synthesize internalTextView;
-@synthesize maxNumberOfLines;
-@synthesize minNumberOfLines;
 @synthesize delegate;
 
 @synthesize text;
@@ -116,6 +114,11 @@
     maxNumberOfLines = n;
 }
 
+-(int)maxNumberOfLines
+{
+    return maxNumberOfLines;
+}
+
 -(void)setMinNumberOfLines:(int)m
 {
 	// Use internalTextView for height calculations, thanks to Gwynne <http://blog.darkrainfall.org/>
@@ -138,6 +141,11 @@
     [self sizeToFit];
     
     minNumberOfLines = m;
+}
+
+-(int)minNumberOfLines
+{
+    return minNumberOfLines;
 }
 
 

@@ -87,7 +87,7 @@
 -(void) keyboardWillShow:(NSNotification *)note{
     // get keyboard size and loctaion
 	CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue: &keyboardBounds];
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
 	
 	// get the height since this is the main value that we need.
 	NSInteger kbSizeH = keyboardBounds.size.height;
@@ -111,7 +111,7 @@
 -(void) keyboardWillHide:(NSNotification *)note{
     // get keyboard size and location
 	CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardBoundsUserInfoKey] getValue: &keyboardBounds];
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
 	
 	// get the height since this is the main value that we need.
 	NSInteger kbSizeH = keyboardBounds.size.height;
