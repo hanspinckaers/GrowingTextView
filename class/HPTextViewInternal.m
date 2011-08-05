@@ -57,6 +57,17 @@
 	[super setContentInset:insets];
 }
 
+-(void)setContentSize:(CGSize)contentSize
+{
+    // is this an iOS5 bug? Need testing!
+    if(self.contentSize.height > contentSize.height)
+    {
+        self.contentInset = UIEdgeInsetsZero;
+    }
+    
+    [super setContentSize:contentSize];
+}
+
 
 - (void)dealloc {
     [super dealloc];
