@@ -93,6 +93,10 @@
 
 
 //uitextview methods
+//need others? use .internalTextView
+- (BOOL)becomeFirstResponder;
+- (BOOL)resignFirstResponder;
+
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;
 

@@ -103,7 +103,7 @@
     
     internalTextView.text = newText;
     
-    minHeight = internalTextView.contentSize.height;
+    maxHeight = internalTextView.contentSize.height;
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -227,6 +227,12 @@
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
 	
+}
+
+- (BOOL)becomeFirstResponder
+{
+    [super becomeFirstResponder];
+    return [self.internalTextView becomeFirstResponder];
 }
 
 -(BOOL)resignFirstResponder
@@ -426,15 +432,6 @@
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (BOOL)becomeFirstResponder
-{
-    return [self.internalTextView becomeFirstResponder];
-}
 
-- (BOOL)resignFirstResponder
-{
-    return [self.internalTextView resignFirstResponder];
-}
 
 @end
