@@ -53,21 +53,22 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
-	self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor colorWithRed:219.0f/255.0f green:226.0f/255.0f blue:237.0f/255.0f alpha:1];
 	
     containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     containerView.backgroundColor = [UIColor whiteColor];
     
-	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(5, 3, 308, 100)];
+	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 306, 100)];
 	textView.minNumberOfLines = 1;
-	textView.maxNumberOfLines = 4;
+	textView.maxNumberOfLines = 6;
 	textView.returnKeyType = UIReturnKeyGo; //just as an example
-	textView.font = [UIFont boldSystemFontOfSize:15.0f];
+	textView.font = [UIFont systemFontOfSize:15.0f];
 	textView.delegate = self;
-    
+        
     //textView.text = @"test\n\ntest";
 	//textView.animateHeightChange = NO; //turns off animation
-		
+    textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
+
 	[self.view addSubview:containerView];
     
 	[textView sizeToFit];
@@ -124,7 +125,7 @@
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:0.25f];
 	
 	// set views with new info
 	containerView.frame = containerFrame;
@@ -148,7 +149,7 @@
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationDuration:0.25f];
 	
 	// set views with new info
 	containerView.frame = containerFrame;

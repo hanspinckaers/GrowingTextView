@@ -62,7 +62,10 @@
     // is this an iOS5 bug? Need testing!
     if(self.contentSize.height > contentSize.height)
     {
-        self.contentInset = UIEdgeInsetsZero;
+        UIEdgeInsets insets = self.contentInset;
+        insets.bottom = 0;
+        insets.top = 0;
+        self.contentInset = insets;
     }
     
     [super setContentSize:contentSize];

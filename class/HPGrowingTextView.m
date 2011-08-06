@@ -175,6 +175,7 @@
 		{
 			if(animateHeightChange){
 				[UIView beginAnimations:@"" context:nil];
+                [UIView setAnimationDuration:0.1f];
 				[UIView setAnimationDelegate:self];
 				[UIView setAnimationDidStopSelector:@selector(growDidStop)];
 				[UIView setAnimationBeginsFromCurrentState:YES];
