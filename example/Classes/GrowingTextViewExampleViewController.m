@@ -67,7 +67,7 @@
         
     //textView.text = @"test\n\ntest";
 	//textView.animateHeightChange = NO; //turns off animation
-    textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
+    //textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
 
 	[self.view addSubview:containerView];
     
