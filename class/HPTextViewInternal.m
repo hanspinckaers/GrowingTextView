@@ -34,13 +34,21 @@
 {
 	if(self.tracking || self.decelerating){
 		//initiated by user...
-		self.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        UIEdgeInsets insets = self.contentInset;
+        insets.bottom = 0;
+        insets.top = 0;
+        self.contentInset = insets;
+        
 	} else {
 
 		float bottomOffset = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom);
-		if(s.y < bottomOffset && self.scrollEnabled){
-			self.contentInset = UIEdgeInsetsMake(0, 0, 8, 0); //maybe use scrollRangeToVisible?
-		}
+		if(s.y < bottomOffset && self.scrollEnabled){            
+            UIEdgeInsets insets = self.contentInset;
+            insets.bottom = 8;
+            insets.top = 0;
+            self.contentInset = insets;
+        }
 		
 	}
 	

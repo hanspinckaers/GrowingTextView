@@ -65,10 +65,14 @@
 	textView.font = [UIFont systemFontOfSize:15.0f];
 	textView.delegate = self;
         
-    //textView.text = @"test\n\ntest";
-	//textView.animateHeightChange = NO; //turns off animation
-    //textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
-
+    // textView.text = @"test\n\ntest";
+	// textView.animateHeightChange = NO; //turns off animation
+    
+    textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
+    CGSize s = textView.internalTextView.contentSize;
+    s.width -= 5; // compensate for contentInset, otherwise you get vertical scrolling
+    textView.internalTextView.contentSize = s;
+    
 	[self.view addSubview:containerView];
     
 	[textView sizeToFit];
