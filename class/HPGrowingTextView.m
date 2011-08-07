@@ -125,7 +125,7 @@
     internalTextView.delegate = nil;
     internalTextView.hidden = YES;
     
-    for (int i = 2; i < n; ++i)
+    for (int i = 1; i < n; ++i)
         newText = [newText stringByAppendingString:@"\n|W|"];
     
     internalTextView.text = newText;
@@ -154,7 +154,7 @@
     internalTextView.delegate = nil;
     internalTextView.hidden = YES;
     
-    for (int i = 2; i < m; ++i)
+    for (int i = 1; i < m; ++i)
         newText = [newText stringByAppendingString:@"\n|W|"];
     
     internalTextView.text = newText;
