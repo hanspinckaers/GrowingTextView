@@ -20,6 +20,10 @@
 		3AC80F9713EC953D00712F9A /* MessageEntryBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AC80F9313EC953D00712F9A /* MessageEntryBackground@2x.png */; };
 		3AC80F9813EC953D00712F9A /* MessageEntryInputField.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AC80F9413EC953D00712F9A /* MessageEntryInputField.png */; };
 		3AC80F9913EC953D00712F9A /* MessageEntryInputField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AC80F9513EC953D00712F9A /* MessageEntryInputField@2x.png */; };
+		3ADB373513EE98D60006E262 /* MessageEntrySendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB373113EE98D60006E262 /* MessageEntrySendButton.png */; };
+		3ADB373613EE98D60006E262 /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB373213EE98D60006E262 /* MessageEntrySendButton@2x.png */; };
+		3ADB373713EE98D60006E262 /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB373313EE98D60006E262 /* MessageEntrySendButtonPressed.png */; };
+		3ADB373813EE98D60006E262 /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB373413EE98D60006E262 /* MessageEntrySendButtonPressed@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		3AC80F9313EC953D00712F9A /* MessageEntryBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryBackground@2x.png"; sourceTree = "<group>"; };
 		3AC80F9413EC953D00712F9A /* MessageEntryInputField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryInputField.png; sourceTree = "<group>"; };
 		3AC80F9513EC953D00712F9A /* MessageEntryInputField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryInputField@2x.png"; sourceTree = "<group>"; };
+		3ADB373113EE98D60006E262 /* MessageEntrySendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButton.png; sourceTree = "<group>"; };
+		3ADB373213EE98D60006E262 /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
+		3ADB373313EE98D60006E262 /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
+		3ADB373413EE98D60006E262 /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* GrowingTextViewExample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GrowingTextViewExample-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +111,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3ADB373113EE98D60006E262 /* MessageEntrySendButton.png */,
+				3ADB373213EE98D60006E262 /* MessageEntrySendButton@2x.png */,
+				3ADB373313EE98D60006E262 /* MessageEntrySendButtonPressed.png */,
+				3ADB373413EE98D60006E262 /* MessageEntrySendButtonPressed@2x.png */,
 				3AC80F9213EC953D00712F9A /* MessageEntryBackground.png */,
 				3AC80F9313EC953D00712F9A /* MessageEntryBackground@2x.png */,
 				3AC80F9413EC953D00712F9A /* MessageEntryInputField.png */,
@@ -189,6 +201,10 @@
 				3AC80F9713EC953D00712F9A /* MessageEntryBackground@2x.png in Resources */,
 				3AC80F9813EC953D00712F9A /* MessageEntryInputField.png in Resources */,
 				3AC80F9913EC953D00712F9A /* MessageEntryInputField@2x.png in Resources */,
+				3ADB373513EE98D60006E262 /* MessageEntrySendButton.png in Resources */,
+				3ADB373613EE98D60006E262 /* MessageEntrySendButton@2x.png in Resources */,
+				3ADB373713EE98D60006E262 /* MessageEntrySendButtonPressed.png in Resources */,
+				3ADB373813EE98D60006E262 /* MessageEntrySendButtonPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -49,7 +49,6 @@
 		CGRect r = frame;
 		r.origin.y = 0;
 		r.origin.x = 0;
-		
 		internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
 		internalTextView.delegate = self;
 		internalTextView.scrollEnabled = NO;
@@ -90,10 +89,32 @@
 {
 	CGRect r = aframe;
 	r.origin.y = 0;
-	r.origin.x = 0;
+	r.origin.x = contentInset.left;
+    r.size.width -= contentInset.left + contentInset.right;
+
 	internalTextView.frame = r;
 	
 	[super setFrame:aframe];
+}
+
+-(void)setContentInset:(UIEdgeInsets)inset
+{
+    contentInset = inset;
+    
+    CGRect r = self.frame;
+    r.origin.y = inset.top - inset.bottom;
+    r.origin.x = inset.left;
+    r.size.width -= inset.left + inset.right;
+    
+    internalTextView.frame = r;
+    
+    [self setMaxNumberOfLines:maxNumberOfLines];
+    [self setMaxNumberOfLines:minNumberOfLines];
+}
+
+-(UIEdgeInsets)contentInset
+{
+    return contentInset;
 }
 
 -(void)setMaxNumberOfLines:(int)n
@@ -190,8 +211,11 @@
 			internalTextViewFrame.size.height = newSizeH; // + padding
 			self.frame = internalTextViewFrame;
 			
-			internalTextViewFrame.origin.y = 0;
-			internalTextViewFrame.origin.x = 0;
+			internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
+			internalTextViewFrame.origin.x = contentInset.left;
+            internalTextViewFrame.size.height = newSizeH;
+            internalTextViewFrame.size.width = internalTextView.contentSize.width;
+            
 			internalTextView.frame = internalTextViewFrame;
 			
             // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
@@ -234,6 +258,11 @@
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
 	
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [internalTextView becomeFirstResponder];
 }
 
 - (BOOL)becomeFirstResponder

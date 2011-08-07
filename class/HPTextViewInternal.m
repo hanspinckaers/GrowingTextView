@@ -47,11 +47,10 @@
             UIEdgeInsets insets = self.contentInset;
             insets.bottom = 8;
             insets.top = 0;
-            self.contentInset = insets;
+            self.contentInset = insets;            
         }
-		
 	}
-	
+    	
 	[super setContentOffset:s];
 }
 

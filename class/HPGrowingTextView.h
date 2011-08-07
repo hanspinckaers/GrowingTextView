@@ -71,6 +71,8 @@
 	BOOL editable;
 	UIDataDetectorTypes dataDetectorTypes;
 	UIReturnKeyType returnKeyType;
+    
+    UIEdgeInsets contentInset;
 }
 
 //real class properties
@@ -90,7 +92,7 @@
 @property(nonatomic,getter=isEditable) BOOL editable;
 @property(nonatomic) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
 @property (nonatomic) UIReturnKeyType returnKeyType;
-
+@property (assign) UIEdgeInsets contentInset;
 
 //uitextview methods
 //need others? use .internalTextView

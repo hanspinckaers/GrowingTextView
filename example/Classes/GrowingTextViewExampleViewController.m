@@ -55,57 +55,58 @@
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
     self.view.backgroundColor = [UIColor colorWithRed:219.0f/255.0f green:226.0f/255.0f blue:237.0f/255.0f alpha:1];
 	
-    containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
-    containerView.backgroundColor = [UIColor whiteColor];
+    containerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 320, 40)];
     
-	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 306, 100)];
+	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
+    textView.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 6;
 	textView.returnKeyType = UIReturnKeyGo; //just as an example
 	textView.font = [UIFont systemFontOfSize:15.0f];
 	textView.delegate = self;
-        
+    textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
+    textView.backgroundColor = [UIColor whiteColor];
+    
     // textView.text = @"test\n\ntest";
 	// textView.animateHeightChange = NO; //turns off animation
-    
-    textView.internalTextView.contentInset = UIEdgeInsetsMake(0, 10, 0, 0);
-    CGSize s = textView.internalTextView.contentSize;
-    s.width -= 5; // compensate for contentInset, otherwise you get vertical scrolling
-    textView.internalTextView.contentSize = s;
-    
-	[self.view addSubview:containerView];
-    
-	[textView sizeToFit];
+
+    [self.view addSubview:containerView];
 	
     UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
     UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
     UIImageView *entryImageView = [[[UIImageView alloc] initWithImage:entryBackground] autorelease];
-    entryImageView.frame = CGRectMake(5, 0, 315, 100);
-        
+    entryImageView.frame = CGRectMake(5, 0, 248, 40);
     entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             
     UIImage *rawBackground = [UIImage imageNamed:@"MessageEntryBackground.png"];
     UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
     UIImageView *imageView = [[[UIImageView alloc] initWithImage:background] autorelease];
-    imageView.frame = CGRectMake(0, 0, 315, 100);
-    
+    imageView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
+
     // view hierachy
     [containerView addSubview:imageView];
     [containerView addSubview:textView];
     [containerView addSubview:entryImageView];
 
-	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	doneBtn.frame = CGRectMake(30, 30, 260, 80);
+    UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
+    UIImage *selectedSendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
+    
+	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 27);
+    doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 	[doneBtn setTitle:@"Done" forState:UIControlStateNormal];
+    
+    [doneBtn setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+    doneBtn.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
+    doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+
+    [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[doneBtn addTarget:self action:@selector(resignTextView) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:doneBtn];
-		
-	CGRect r = containerView.frame;
-    r.size.height = 40;
-	r.origin.y = self.view.frame.size.height - r.size.height;
-	containerView.frame = r;		
+    [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
+    [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
+	[containerView addSubview:doneBtn];	
 }
 
 -(void)resignTextView
