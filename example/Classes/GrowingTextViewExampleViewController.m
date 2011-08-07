@@ -58,7 +58,7 @@
     containerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 320, 40)];
     
 	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
-    textView.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 6;
@@ -98,10 +98,10 @@
     doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 	[doneBtn setTitle:@"Done" forState:UIControlStateNormal];
     
-    [doneBtn setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [doneBtn setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
     doneBtn.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-    doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0f];
-
+    doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    
     [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[doneBtn addTarget:self action:@selector(resignTextView) forControlEvents:UIControlEventTouchUpInside];
     [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
