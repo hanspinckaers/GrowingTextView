@@ -109,7 +109,7 @@
     internalTextView.frame = r;
     
     [self setMaxNumberOfLines:maxNumberOfLines];
-    [self setMaxNumberOfLines:minNumberOfLines];
+    [self setMinNumberOfLines:minNumberOfLines];
 }
 
 -(UIEdgeInsets)contentInset
