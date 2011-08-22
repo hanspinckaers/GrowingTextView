@@ -13,7 +13,7 @@ Properties
 
 UITextView properties
 
-  NSString *text;
+	NSString *text;
 	UIFont *font;
 	UIColor *textColor;
 	UITextAlignment textAlignment;
@@ -23,23 +23,24 @@ UITextView properties
 	UIReturnKeyType returnKeyType;
 
 Delegate methods
-----------------
-  - (BOOL)growingTextViewShouldBeginEditing:(HPGrowingTextView *)growingTextView;
-  - (BOOL)growingTextViewShouldEndEditing:(HPGrowingTextView *)growingTextView;
+---------------
+
+`- (BOOL)growingTextViewShouldBeginEditing:(HPGrowingTextView *)growingTextView;
+- (BOOL)growingTextViewShouldEndEditing:(HPGrowingTextView *)growingTextView;`
  
-  - (void)growingTextViewDidBeginEditing:(HPGrowingTextView *)growingTextView;
-	- (void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView;
+`- (void)growingTextViewDidBeginEditing:(HPGrowingTextView *)growingTextView;
+- (void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView;`
  
-	- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
-	- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView;
+`- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange(NSRange)range replacementText:(NSString *)text;
+- (void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView;`
  
-	//called WITHIN animation block!
-	- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height;
+Called WITHIN animation block!
+`- (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height;`
  
-	//called after animation
-	- (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height;
+Called after animation
+`- (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height;`
  
-	- (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView;
-	- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;
+`- (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView;
+- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;`
 
 For more info, see blogpost: http://www.hanspinckaers.com/multi-line-uitextview-similar-to-sms
