@@ -78,7 +78,6 @@
 //real class properties
 @property int maxNumberOfLines;
 @property int minNumberOfLines;
-@property BOOL animateHeightChange;
 @property (retain) UITextView *internalTextView;	
 
 

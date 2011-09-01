@@ -39,7 +39,6 @@
 @synthesize selectedRange;
 @synthesize editable;
 @synthesize dataDetectorTypes; 
-@synthesize animateHeightChange;
 @synthesize returnKeyType;
 
 
@@ -61,9 +60,7 @@
 		UIView *internal = (UIView*)[[internalTextView subviews] objectAtIndex:0];
 		minHeight = internal.frame.size.height;
 		minNumberOfLines = 1;
-		
-		animateHeightChange = YES;
-		
+
 		internalTextView.text = @"";
 		
 		[self setMaxNumberOfLines:3];
@@ -194,13 +191,6 @@
         
 		if (newSizeH <= maxHeight)
 		{
-			if(animateHeightChange){
-				[UIView beginAnimations:@"" context:nil];
-                [UIView setAnimationDuration:0.1f];
-				[UIView setAnimationDelegate:self];
-				[UIView setAnimationDidStopSelector:@selector(growDidStop)];
-				[UIView setAnimationBeginsFromCurrentState:YES];
-			}
 			
 			if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
 				[delegate growingTextView:self willChangeHeight:newSizeH];
@@ -221,9 +211,7 @@
             // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
             // thanks to Gwynne <http://blog.darkrainfall.org/>
             
-			if(animateHeightChange){
-				[UIView commitAnimations];
-			} else if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
+			if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
                 [delegate growingTextView:self didChangeHeight:newSizeH];
             }		
 		}
