@@ -85,6 +85,8 @@
     imageView.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
+    textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
     // view hierachy
     [containerView addSubview:imageView];
     [containerView addSubview:textView];
@@ -95,7 +97,7 @@
     
 	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 27);
-    doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 	[doneBtn setTitle:@"Done" forState:UIControlStateNormal];
     
     [doneBtn setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
@@ -106,7 +108,8 @@
 	[doneBtn addTarget:self action:@selector(resignTextView) forControlEvents:UIControlEventTouchUpInside];
     [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
     [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
-	[containerView addSubview:doneBtn];	
+	[containerView addSubview:doneBtn];
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 }
 
 -(void)resignTextView
@@ -119,18 +122,20 @@
     // get keyboard size and loctaion
 	CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-	
-	// get the height since this is the main value that we need.
-	NSInteger kbSizeH = keyboardBounds.size.height;
-		
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
 	// get a rect for the textView frame
 	CGRect containerFrame = containerView.frame;
-	containerFrame.origin.y -= kbSizeH;
-	
+    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25f];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
 	
 	// set views with new info
 	containerView.frame = containerFrame;
@@ -140,22 +145,19 @@
 }
 
 -(void) keyboardWillHide:(NSNotification *)note{
-    // get keyboard size and location
-	CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-	
-	// get the height since this is the main value that we need.
-	NSInteger kbSizeH = keyboardBounds.size.height;
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
 	
 	// get a rect for the textView frame
 	CGRect containerFrame = containerView.frame;
-	containerFrame.origin.y += kbSizeH;
+    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25f];
-	
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+
 	// set views with new info
 	containerView.frame = containerFrame;
 	
@@ -171,6 +173,11 @@
     r.size.height -= diff;
     r.origin.y += diff;
 	containerView.frame = r;
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
