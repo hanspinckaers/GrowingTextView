@@ -65,7 +65,7 @@
 		animateHeightChange = YES;
 		
 		internalTextView.text = @"";
-		
+        
 		[self setMaxNumberOfLines:3];
     }
     return self;
@@ -91,7 +91,7 @@
 	r.origin.y = 0;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
-
+    
 	internalTextView.frame = r;
 	
 	[super setFrame:aframe];
@@ -181,7 +181,7 @@
 	//size of content, so we can set the frame of self
 	NSInteger newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
-	 
+    
 	if (internalTextView.frame.size.height != newSizeH)
 	{
         // [fixed] Pasting too much text into the view failed to fire the height change, 
@@ -194,41 +194,60 @@
         
 		if (newSizeH <= maxHeight)
 		{
-			if(animateHeightChange){
-				[UIView beginAnimations:@"" context:nil];
-                [UIView setAnimationDuration:0.1f];
-				[UIView setAnimationDelegate:self];
-				[UIView setAnimationDidStopSelector:@selector(growDidStop)];
-				[UIView setAnimationBeginsFromCurrentState:YES];
-			}
 			
-			if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
-				[delegate growingTextView:self willChangeHeight:newSizeH];
-			}
-			
-			// internalTextView
-			CGRect internalTextViewFrame = self.frame;
-			internalTextViewFrame.size.height = newSizeH; // + padding
-			self.frame = internalTextViewFrame;
-			
-			internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
-			internalTextViewFrame.origin.x = contentInset.left;
-            internalTextViewFrame.size.height = newSizeH;
-            internalTextViewFrame.size.width = internalTextView.contentSize.width;
-            
-			internalTextView.frame = internalTextViewFrame;
-			
-            // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
-            // thanks to Gwynne <http://blog.darkrainfall.org/>
-            
-			if(animateHeightChange){
-				[UIView commitAnimations];
-			} else if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
-                [delegate growingTextView:self didChangeHeight:newSizeH];
-            }		
+            if(animateHeightChange) {
+                
+                __block HPGrowingTextView *_bself = self;
+                __block UIView *_bInternalTextView = (UIView*)internalTextView;
+                __block id _bdel = delegate;
+                
+                [UIView animateWithDuration:0.1f 
+                                      delay:0 
+                                    options:(UIViewAnimationOptionAllowUserInteraction|
+                                             UIViewAnimationOptionBeginFromCurrentState)                                 animations:^(void) {
+                                        if ([_bdel respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
+                                            [_bdel growingTextView:self willChangeHeight:newSizeH];
+                                        }
+                                        
+                                        CGRect internalTextViewFrame = _bself.frame;
+                                        internalTextViewFrame.size.height = newSizeH; // + padding
+                                        _bself.frame = internalTextViewFrame;
+                                        
+                                        internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
+                                        internalTextViewFrame.origin.x = contentInset.left;
+                                        internalTextViewFrame.size.width = internalTextView.contentSize.width;
+                                        
+                                        _bInternalTextView.frame = internalTextViewFrame;
+                                    } completion:^(BOOL finished) {
+                                        [_bself growDidStop];
+                                    }];
+            } else {
+                if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
+                    [delegate growingTextView:self willChangeHeight:newSizeH];
+                }
+                // internalTextView
+                CGRect internalTextViewFrame = self.frame;
+                internalTextViewFrame.size.height = newSizeH; // + padding
+                
+                self.frame = internalTextViewFrame;
+                
+                internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
+                internalTextViewFrame.origin.x = contentInset.left;
+                internalTextViewFrame.size.height = newSizeH;
+                internalTextViewFrame.size.width = internalTextView.contentSize.width;
+                
+                internalTextView.frame = internalTextViewFrame;
+                
+                // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
+                // thanks to Gwynne <http://blog.darkrainfall.org/>
+                
+                if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
+                    [delegate growingTextView:self didChangeHeight:newSizeH];
+                }	
+            }
 		}
 		
-				
+        
         // if our new height is greater than the maxHeight
         // sets not set the height or move things
         // around and enable scrolling
@@ -444,7 +463,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
-	replacementText:(NSString *)atext {
+ replacementText:(NSString *)atext {
 	
 	//weird 1 pixel bug when clicking backspace when textView is empty
 	if(![textView hasText] && [atext isEqualToString:@""]) return NO;
@@ -462,7 +481,7 @@
 	
 	return YES;
 	
-
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
