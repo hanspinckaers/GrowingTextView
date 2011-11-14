@@ -30,6 +30,17 @@
 
 @implementation HPTextViewInternal
 
+-(void)setText:(NSString *)text
+{
+    BOOL originalValue = self.scrollEnabled;
+    //If one of GrowingTextView's superviews is a scrollView, and self.scrollEnabled == NO,
+    //setting the text programatically will cause UIKit to search upwards until it finds a scrollView with scrollEnabled==yes
+    //then scroll it erratically. Setting scrollEnabled temporarily to YES prevents this.
+    [self setScrollEnabled:YES];
+    [super setText:text];
+    [self setScrollEnabled:originalValue];
+}
+
 -(void)setContentOffset:(CGPoint)s
 {
 	if(self.tracking || self.decelerating){
