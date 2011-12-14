@@ -205,7 +205,8 @@
 	//size of content, so we can set the frame of self
 	NSInteger newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
-    
+  if (internalTextView.frame.size.height > maxHeight) newSizeH = maxHeight; // not taller than maxHeight
+
 	if (internalTextView.frame.size.height != newSizeH)
 	{
         // [fixed] Pasting too much text into the view failed to fire the height change, 
