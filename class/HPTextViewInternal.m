@@ -33,6 +33,17 @@
 @synthesize placeHolderLabel;
 @synthesize placeholder;
 @synthesize placeholderColor;
+-(void)setText:(NSString *)text
+{
+    BOOL originalValue = self.scrollEnabled;
+    //If one of GrowingTextView's superviews is a scrollView, and self.scrollEnabled == NO,
+    //setting the text programatically will cause UIKit to search upwards until it finds a scrollView with scrollEnabled==yes
+    //then scroll it erratically. Setting scrollEnabled temporarily to YES prevents this.
+    [self setScrollEnabled:YES];
+    [super setText:text];
+    [self setScrollEnabled:originalValue];
+    [self textChanged:nil];
+}
 
 -(void)setContentOffset:(CGPoint)s
 {
@@ -125,11 +136,6 @@
   {
     [[self viewWithTag:999] setAlpha:0];
   }
-}
-
-- (void)setText:(NSString *)text {
-  [super setText:text];
-  [self textChanged:nil];
 }
 
 - (void)drawRect:(CGRect)rect

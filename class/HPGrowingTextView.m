@@ -115,6 +115,12 @@
 	[super setFrame:aframe];
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
+}
+
 -(void)setContentInset:(UIEdgeInsets)inset
 {
     contentInset = inset;
@@ -199,7 +205,8 @@
 	//size of content, so we can set the frame of self
 	NSInteger newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
-    
+  if (internalTextView.frame.size.height > maxHeight) newSizeH = maxHeight; // not taller than maxHeight
+
 	if (internalTextView.frame.size.height != newSizeH)
 	{
         // [fixed] Pasting too much text into the view failed to fire the height change, 
@@ -486,6 +493,10 @@
 	
 	//weird 1 pixel bug when clicking backspace when textView is empty
 	if(![textView hasText] && [atext isEqualToString:@""]) return NO;
+	
+	//Added by bretdabaker: sometimes we want to handle this ourselves
+    	if ([delegate respondsToSelector:@selector(growingTextView:shouldChangeTextInRange:replacementText:)])
+        	return [delegate growingTextView:self shouldChangeTextInRange:range replacementText:atext];
 	
 	if ([atext isEqualToString:@"\n"]) {
 		if ([delegate respondsToSelector:@selector(growingTextViewShouldReturn:)]) {
