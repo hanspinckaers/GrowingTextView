@@ -522,5 +522,12 @@
 }
 
 
+- (void) setPlaceholder:(NSString *)placeholder {
+  internalTextView.placeholder = placeholder;
+}
+- (NSString*) placeholder {
+  return internalTextView.placeholder;
+}
+
 
 @end
