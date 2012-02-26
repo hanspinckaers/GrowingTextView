@@ -27,8 +27,5 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface HPTextViewInternal : UITextView {
-}
-
+@interface HPTextViewInternal : UITextView
 @end
