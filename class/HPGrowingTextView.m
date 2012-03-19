@@ -109,8 +109,8 @@
 	r.origin.y = 0;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
-    
-	internalTextView.frame = r;
+    if (!CGRectIsEmpty(aframe))
+        internalTextView.frame = r;
 	
 	[super setFrame:aframe];
 }
