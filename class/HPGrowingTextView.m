@@ -30,8 +30,9 @@
 
 @interface HPGrowingTextView(private)
 -(void)commonInitialiser;
--(void)resizeTextView:(NSInteger)newSizeH;
+-(void)resizeTextView:(CGFloat)newSizeH;
 -(void)growDidStop;
+-(void)sizeToFitMaxHeight;
 @end
 
 @implementation HPGrowingTextView
@@ -46,6 +47,7 @@
 @synthesize dataDetectorTypes; 
 @synthesize animateHeightChange;
 @synthesize returnKeyType;
+@synthesize minHeight, maxHeight;
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -91,16 +93,7 @@
 
 -(void)sizeToFit
 {
-	CGRect r = self.frame;
-    
-    // check if the text is available in text view or not, if it is available, no need to set it to minimum lenth, it could vary as per the text length
-    // fix from Ankit Thakur
-    if ([self.text length] > 0) {
-        return;
-    } else {
-        r.size.height = minHeight;
-        self.frame = r;
-    }
+    [self sizeToFitMaxHeight];
 }
 
 -(void)setFrame:(CGRect)aframe
@@ -193,24 +186,37 @@
     return minNumberOfLines;
 }
 
+- (void)setMinHeight:(CGFloat)height
+{
+	minHeight = height;
+    
+	[self sizeToFit];
+}
 
-- (void)textViewDidChange:(UITextView *)textView
-{	
+- (void)setMaxHeight:(CGFloat)height
+{
+	maxHeight = height;
+    
+	[self sizeToFit];
+}
+
+- (void) sizeToFitMaxHeight
+{
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = internalTextView.contentSize.height;
+	CGFloat newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
   if (internalTextView.frame.size.height > maxHeight) newSizeH = maxHeight; // not taller than maxHeight
 
+    // [fixed] Pasting too much text into the view failed to fire the height change, 
+    // thanks to Gwynne <http://blog.darkrainfall.org/>
+    
+    if (newSizeH > maxHeight && internalTextView.frame.size.height <= maxHeight)
+    {
+        newSizeH = maxHeight;
+    }
+
 	if (internalTextView.frame.size.height != newSizeH)
 	{
-        // [fixed] Pasting too much text into the view failed to fire the height change, 
-        // thanks to Gwynne <http://blog.darkrainfall.org/>
-        
-        if (newSizeH > maxHeight && internalTextView.frame.size.height <= maxHeight)
-        {
-            newSizeH = maxHeight;
-        }
-        
 		if (newSizeH <= maxHeight)
 		{
             if(animateHeightChange) {
@@ -264,8 +270,13 @@
 		} else {
 			internalTextView.scrollEnabled = NO;
 		}
-		
 	}
+}
+
+
+- (void)textViewDidChange:(UITextView *)textView
+{	
+	[self sizeToFitMaxHeight];
 	
 	
 	if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
@@ -274,7 +285,7 @@
 	
 }
 
--(void)resizeTextView:(NSInteger)newSizeH
+-(void)resizeTextView:(CGFloat)newSizeH
 {
     if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
         [delegate growingTextView:self willChangeHeight:newSizeH];
