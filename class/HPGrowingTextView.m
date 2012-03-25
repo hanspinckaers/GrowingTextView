@@ -366,6 +366,17 @@
 	return internalTextView.textColor;
 }
 
+-(void)setBackgroundColor:(UIColor *)backgroundColor
+{
+    [super setBackgroundColor:backgroundColor];
+	internalTextView.backgroundColor = backgroundColor;
+}
+
+-(UIColor*)backgroundColor
+{
+    return internalTextView.backgroundColor;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 -(void)setTextAlignment:(UITextAlignment)aligment
