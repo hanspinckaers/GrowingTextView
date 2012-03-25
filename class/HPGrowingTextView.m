@@ -115,12 +115,6 @@
 	[super setFrame:aframe];
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
-}
-
 -(void)setContentInset:(UIEdgeInsets)inset
 {
     contentInset = inset;
