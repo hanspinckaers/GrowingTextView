@@ -38,14 +38,7 @@
 @synthesize internalTextView;
 @synthesize delegate;
 
-@synthesize font;
-@synthesize textColor;
-@synthesize textAlignment; 
-@synthesize selectedRange;
-@synthesize editable;
-@synthesize dataDetectorTypes; 
 @synthesize animateHeightChange;
-@synthesize returnKeyType;
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -314,11 +307,6 @@
 {
 	[super resignFirstResponder];
 	return [internalTextView resignFirstResponder];
-}
-
-- (void)dealloc {
-	[internalTextView release];
-    [super dealloc];
 }
 
 

@@ -4,6 +4,7 @@
 .dropbox
 
 build/
+DerivedData/
 
 *.pbxuser
 *.perspective

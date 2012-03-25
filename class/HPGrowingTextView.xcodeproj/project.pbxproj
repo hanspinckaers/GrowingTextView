@@ -1,0 +1,255 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA14A51714FA459500E00B55 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA14A51614FA459500E00B55 /* Foundation.framework */; };
+		FA14A52814FA469300E00B55 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA14A52714FA469300E00B55 /* UIKit.framework */; };
+		FA14A52B14FA46A800E00B55 /* HPTextViewInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = FA14A52914FA46A800E00B55 /* HPTextViewInternal.h */; };
+		FA14A52C14FA46A800E00B55 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14A52A14FA46A800E00B55 /* HPTextViewInternal.m */; };
+		FA14A53014FA48EF00E00B55 /* HPGrowingTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = FA14A52E14FA48EF00E00B55 /* HPGrowingTextView.h */; };
+		FA14A53114FA48EF00E00B55 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA14A52F14FA48EF00E00B55 /* HPGrowingTextView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA14A51314FA459500E00B55 /* libHPGrowingTextView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHPGrowingTextView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA14A51614FA459500E00B55 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA14A52714FA469300E00B55 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FA14A52914FA46A800E00B55 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = SOURCE_ROOT; };
+		FA14A52A14FA46A800E00B55 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = SOURCE_ROOT; };
+		FA14A52E14FA48EF00E00B55 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = SOURCE_ROOT; };
+		FA14A52F14FA48EF00E00B55 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA14A51014FA459500E00B55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA14A52814FA469300E00B55 /* UIKit.framework in Frameworks */,
+				FA14A51714FA459500E00B55 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA14A50814FA459400E00B55 = {
+			isa = PBXGroup;
+			children = (
+				FA14A51814FA459500E00B55 /* HPGrowingTextView */,
+				FA14A51514FA459500E00B55 /* Frameworks */,
+				FA14A51414FA459500E00B55 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA14A51414FA459500E00B55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA14A51314FA459500E00B55 /* libHPGrowingTextView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA14A51514FA459500E00B55 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA14A52714FA469300E00B55 /* UIKit.framework */,
+				FA14A51614FA459500E00B55 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA14A51814FA459500E00B55 /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				FA14A52E14FA48EF00E00B55 /* HPGrowingTextView.h */,
+				FA14A52F14FA48EF00E00B55 /* HPGrowingTextView.m */,
+				FA14A52914FA46A800E00B55 /* HPTextViewInternal.h */,
+				FA14A52A14FA46A800E00B55 /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FA14A51114FA459500E00B55 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA14A52B14FA46A800E00B55 /* HPTextViewInternal.h in Headers */,
+				FA14A53014FA48EF00E00B55 /* HPGrowingTextView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FA14A51214FA459500E00B55 /* HPGrowingTextView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA14A52014FA459500E00B55 /* Build configuration list for PBXNativeTarget "HPGrowingTextView" */;
+			buildPhases = (
+				FA14A50F14FA459500E00B55 /* Sources */,
+				FA14A51014FA459500E00B55 /* Frameworks */,
+				FA14A51114FA459500E00B55 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HPGrowingTextView;
+			productName = HPGrowingTextView;
+			productReference = FA14A51314FA459500E00B55 /* libHPGrowingTextView.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA14A50A14FA459400E00B55 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = FA14A50D14FA459400E00B55 /* Build configuration list for PBXProject "HPGrowingTextView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FA14A50814FA459400E00B55;
+			productRefGroup = FA14A51414FA459500E00B55 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA14A51214FA459500E00B55 /* HPGrowingTextView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA14A50F14FA459500E00B55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA14A52C14FA46A800E00B55 /* HPTextViewInternal.m in Sources */,
+				FA14A53114FA48EF00E00B55 /* HPGrowingTextView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FA14A51E14FA459500E00B55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FA14A51F14FA459500E00B55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NDEBUG=1",
+					"NS_BLOCK_EXCEPTIONS=1",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA14A52114FA459500E00B55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/HPGrowingTextView.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		FA14A52214FA459500E00B55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/HPGrowingTextView.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA14A50D14FA459400E00B55 /* Build configuration list for PBXProject "HPGrowingTextView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA14A51E14FA459500E00B55 /* Debug */,
+				FA14A51F14FA459500E00B55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA14A52014FA459500E00B55 /* Build configuration list for PBXNativeTarget "HPGrowingTextView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA14A52114FA459500E00B55 /* Debug */,
+				FA14A52214FA459500E00B55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA14A50A14FA459400E00B55 /* Project object */;
+}
