@@ -316,9 +316,14 @@
 	return [internalTextView resignFirstResponder];
 }
 
+-(BOOL)isFirstResponder
+{
+  return [self.internalTextView isFirstResponder];
+}
+
 - (void)dealloc {
 	[internalTextView release];
-    [super dealloc];
+  [super dealloc];
 }
 
 
@@ -366,15 +371,17 @@
 	return internalTextView.textColor;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 -(void)setBackgroundColor:(UIColor *)backgroundColor
 {
-    [super setBackgroundColor:backgroundColor];
+  [super setBackgroundColor:backgroundColor];
 	internalTextView.backgroundColor = backgroundColor;
 }
 
 -(UIColor*)backgroundColor
 {
-    return internalTextView.backgroundColor;
+  return internalTextView.backgroundColor;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,6 +430,18 @@
 -(UIReturnKeyType)returnKeyType
 {
 	return internalTextView.returnKeyType;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
+{
+  internalTextView.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically;
+}
+
+- (BOOL)enablesReturnKeyAutomatically
+{
+  return internalTextView.enablesReturnKeyAutomatically;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

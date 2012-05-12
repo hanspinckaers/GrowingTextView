@@ -93,11 +93,13 @@
 @property(nonatomic) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
 @property (nonatomic) UIReturnKeyType returnKeyType;
 @property (assign) UIEdgeInsets contentInset;
+@property(nonatomic) BOOL enablesReturnKeyAutomatically;
 
 //uitextview methods
 //need others? use .internalTextView
 - (BOOL)becomeFirstResponder;
 - (BOOL)resignFirstResponder;
+- (BOOL)isFirstResponder;
 
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;
