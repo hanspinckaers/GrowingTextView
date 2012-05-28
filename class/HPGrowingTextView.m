@@ -78,8 +78,7 @@
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
     
-    UIView *internal = (UIView*)[[internalTextView subviews] objectAtIndex:0];
-    minHeight = internal.frame.size.height;
+    minHeight = internalTextView.frame.size.height;
     minNumberOfLines = 1;
     
     animateHeightChange = YES;
