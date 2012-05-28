@@ -96,16 +96,16 @@
     return size;
 }
 
--(void)setFrame:(CGRect)aframe
+-(void)layoutSubviews
 {
-	CGRect r = aframe;
+    [super layoutSubviews];
+    
+	CGRect r = self.bounds;
 	r.origin.y = 0;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
     
-	internalTextView.frame = r;
-	
-	[super setFrame:aframe];
+    internalTextView.frame = r;
 }
 
 -(void)setContentInset:(UIEdgeInsets)inset
