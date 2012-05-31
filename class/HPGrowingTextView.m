@@ -269,19 +269,27 @@
 
 -(void)resizeTextView:(NSInteger)newSizeH
 {
-    if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
-        [delegate growingTextView:self willChangeHeight:newSizeH];
+    BOOL canChangeHeight=YES;
+    if ([delegate respondsToSelector:@selector(growingTextViewCanChangeHeight:)]) {
+        canChangeHeight=[delegate growingTextViewCanChangeHeight:self];
     }
     
-    CGRect internalTextViewFrame = self.frame;
-    internalTextViewFrame.size.height = newSizeH; // + padding
-    self.frame = internalTextViewFrame;
-    
-    internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
-    internalTextViewFrame.origin.x = contentInset.left;
-    internalTextViewFrame.size.width = internalTextView.contentSize.width;
-    
-    internalTextView.frame = internalTextViewFrame;
+    if (canChangeHeight) {
+        if ([delegate respondsToSelector:@selector(growingTextView:willChangeHeight:)]) {
+            [delegate growingTextView:self willChangeHeight:newSizeH];
+        }
+        
+        CGRect internalTextViewFrame = self.frame;
+        internalTextViewFrame.size.height = newSizeH; // + padding
+        self.frame = internalTextViewFrame;
+        
+        internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
+        internalTextViewFrame.origin.x = contentInset.left;
+        internalTextViewFrame.size.width = internalTextView.contentSize.width;
+        
+        internalTextView.frame = internalTextViewFrame;
+    }
+
 }
 
 -(void)growDidStop

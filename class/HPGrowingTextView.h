@@ -44,6 +44,7 @@
 
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height;
 - (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height;
+- (BOOL)growingTextViewCanChangeHeight:(HPGrowingTextView *)growingTextView;
 
 - (void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView;
 - (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;
