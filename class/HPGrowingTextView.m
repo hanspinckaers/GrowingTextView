@@ -314,10 +314,6 @@
   return [self.internalTextView isFirstResponder];
 }
 
-- (void)dealloc {
-	[internalTextView release];
-  [super dealloc];
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
