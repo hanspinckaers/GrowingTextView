@@ -43,9 +43,4 @@ Delegate methods
 	-(void)growingTextViewDidChangeSelection:(HPGrowingTextView *)growingTextView;
 	-(BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;
 
-ARC
----
-
-This project is not yet ARC-supported. You should add `-fno-objc-arc` as a compiler flag for the files. See: http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project
-
 For more info, see blogpost: http://www.hanspinckaers.com/multi-line-uitextview-similar-to-sms
