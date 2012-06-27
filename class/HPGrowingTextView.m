@@ -46,6 +46,8 @@
 @synthesize dataDetectorTypes; 
 @synthesize animateHeightChange;
 @synthesize returnKeyType;
+@synthesize placeholder; 
+
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -76,6 +78,7 @@
     internalTextView.contentInset = UIEdgeInsetsZero;		
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
+    internalTextView.placeholder = @"";
     [self addSubview:internalTextView];
     
     minHeight = internalTextView.frame.size.height;
@@ -86,6 +89,14 @@
     internalTextView.text = @"";
     
     [self setMaxNumberOfLines:3];
+}
+
+- (void)setPlaceholder:(NSString*)string{
+    internalTextView.placeholder = string;
+}
+
+- (NSString *)getPlaceholder{
+    return internalTextView.placeholder;
 }
 
 -(CGSize)sizeThatFits:(CGSize)size

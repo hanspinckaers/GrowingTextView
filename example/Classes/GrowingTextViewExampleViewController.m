@@ -86,7 +86,7 @@
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
     textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
+    textView.placeholder = @"Enter your Text here";
     // view hierachy
     [containerView addSubview:imageView];
     [containerView addSubview:textView];

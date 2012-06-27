@@ -91,6 +91,7 @@
 @property (nonatomic) UIReturnKeyType returnKeyType;
 @property (assign) UIEdgeInsets contentInset;
 @property(nonatomic) BOOL enablesReturnKeyAutomatically;
+@property(getter = getPlaceholder ,setter = setPlaceholder:) NSString *placeholder;
 
 //uitextview methods
 //need others? use .internalTextView
@@ -100,5 +101,4 @@
 
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;
-
 @end
