@@ -95,6 +95,13 @@
 @property (assign) UIEdgeInsets contentInset;
 @property(nonatomic) BOOL enablesReturnKeyAutomatically;
 
+
+//shadow properties
+@property (nonatomic, assign) CGSize shadowOffset;
+@property (nonatomic, retain) UIColor *shadowColor;
+@property (nonatomic, assign) CGFloat shadowOpacity;
+@property (nonatomic, assign) CGFloat shadowRadius;
+
 //uitextview methods
 //need others? use .internalTextView
 - (BOOL)becomeFirstResponder;
