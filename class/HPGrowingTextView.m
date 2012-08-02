@@ -45,6 +45,7 @@
 @synthesize editable;
 @synthesize dataDetectorTypes; 
 @synthesize animateHeightChange;
+@synthesize animationDuration;
 @synthesize returnKeyType;
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
@@ -82,6 +83,7 @@
     minNumberOfLines = 1;
     
     animateHeightChange = YES;
+    animationDuration = 0.1f;
     
     internalTextView.text = @"";
     
@@ -210,7 +212,7 @@
                 
                 if ([UIView resolveClassMethod:@selector(animateWithDuration:animations:)]) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
-                    [UIView animateWithDuration:0.1f 
+                    [UIView animateWithDuration:animationDuration 
                                           delay:0 
                                         options:(UIViewAnimationOptionAllowUserInteraction|
                                                  UIViewAnimationOptionBeginFromCurrentState)                                 
@@ -225,7 +227,7 @@
 #endif
                 } else {
                     [UIView beginAnimations:@"" context:nil];
-                    [UIView setAnimationDuration:0.1f];
+                    [UIView setAnimationDuration:animationDuration];
                     [UIView setAnimationDelegate:self];
                     [UIView setAnimationDidStopSelector:@selector(growDidStop)];
                     [UIView setAnimationBeginsFromCurrentState:YES];
