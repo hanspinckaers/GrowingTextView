@@ -28,6 +28,10 @@
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
 
+@interface HPGrowingTextView ()
+@property (nonatomic, strong) UILabel *placeholderLabel;
+@end
+
 @interface HPGrowingTextView(private)
 -(void)commonInitialiser;
 -(void)resizeTextView:(NSInteger)newSizeH;
@@ -77,6 +81,18 @@
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
+    
+    CGRect placeholderFrame = r;
+    placeholderFrame.origin.x += 16.f;
+    placeholderFrame.origin.y -= 2.f;
+    UILabel *placeholderLabel = [[UILabel alloc] initWithFrame:placeholderFrame];
+    placeholderLabel.backgroundColor = [UIColor clearColor];
+    placeholderLabel.opaque = NO;
+    placeholderLabel.font = internalTextView.font;
+    placeholderLabel.textColor = [UIColor lightGrayColor];
+    [self addSubview:placeholderLabel];
+    placeholderLabel.hidden = NO;
+    self.placeholderLabel = placeholderLabel;
     
     minHeight = internalTextView.frame.size.height;
     minNumberOfLines = 1;
@@ -188,7 +204,9 @@
 
 
 - (void)textViewDidChange:(UITextView *)textView
-{	
+{
+    self.placeholderLabel.hidden = [textView hasText];
+    
 	//size of content, so we can set the frame of self
 	NSInteger newSizeH = internalTextView.contentSize.height;
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
@@ -315,6 +333,17 @@
 }
 
 
+#pragma mark Placeholder text
+
+- (NSString *)placeholder
+{
+    return self.placeholderLabel.text;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder;
+{
+    self.placeholderLabel.text = placeholder;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UITextView properties
