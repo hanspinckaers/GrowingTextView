@@ -77,7 +77,7 @@
 @property int minNumberOfLines;
 @property BOOL animateHeightChange;
 @property (nonatomic, strong) UITextView *internalTextView;	
-
+@property (nonatomic, copy) NSString *placeholder;
 
 //uitextview properties
 @property(unsafe_unretained) NSObject<HPGrowingTextViewDelegate> *delegate;
