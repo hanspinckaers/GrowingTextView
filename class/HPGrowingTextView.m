@@ -80,8 +80,7 @@
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
     
-    UIView *internal = (UIView*)[[internalTextView subviews] objectAtIndex:0];
-    minHeight = internal.frame.size.height;
+    minHeight = internalTextView.frame.size.height;
     minNumberOfLines = 1;
     
     animateHeightChange = YES;
@@ -91,21 +90,29 @@
     [self setMaxNumberOfLines:3];
 }
 
--(void)sizeToFit
+-(CGSize)sizeThatFits:(CGSize)size
+{
+    if (self.text.length == 0) {
+        size.height = minHeight;
+    }
+    return size;
+}
+
+- (void) sizeToFit
 {
     [self sizeToFitMaxHeight];
 }
 
--(void)setFrame:(CGRect)aframe
+-(void)layoutSubviews
 {
-	CGRect r = aframe;
+    [super layoutSubviews];
+    
+	CGRect r = self.bounds;
 	r.origin.y = 0;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
     
-	internalTextView.frame = r;
-	
-	[super setFrame:aframe];
+    internalTextView.frame = r;
 }
 
 -(void)setContentInset:(UIEdgeInsets)inset
@@ -327,10 +334,11 @@
 	return [internalTextView resignFirstResponder];
 }
 
-- (void)dealloc {
-	[internalTextView release];
-    [super dealloc];
+-(BOOL)isFirstResponder
+{
+  return [self.internalTextView isFirstResponder];
 }
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -377,15 +385,17 @@
 	return internalTextView.textColor;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 -(void)setBackgroundColor:(UIColor *)backgroundColor
 {
-    [super setBackgroundColor:backgroundColor];
+  [super setBackgroundColor:backgroundColor];
 	internalTextView.backgroundColor = backgroundColor;
 }
 
 -(UIColor*)backgroundColor
 {
-    return internalTextView.backgroundColor;
+  return internalTextView.backgroundColor;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,6 +444,18 @@
 -(UIReturnKeyType)returnKeyType
 {
 	return internalTextView.returnKeyType;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
+{
+  internalTextView.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically;
+}
+
+- (BOOL)enablesReturnKeyAutomatically
+{
+  return internalTextView.enablesReturnKeyAutomatically;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
