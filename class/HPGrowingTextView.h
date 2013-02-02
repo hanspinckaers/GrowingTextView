@@ -101,4 +101,7 @@
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;
 
+// call to force a height change (e.g. after you change max/min lines)
+- (void)refreshHeight;
+
 @end
