@@ -10,6 +10,7 @@ Properties
 * `int maxNumberOfLines;` – Stops growing at this amount of lines.
 * `int minNumberOfLines;` – Starts growing at this amount of lines.
 * `BOOL animateHeightChange;` – Animate the growing
+* `NSTimeInterval animationDuration;` – Adjust the duration of the growth animation.
 
 UITextView properties
 
