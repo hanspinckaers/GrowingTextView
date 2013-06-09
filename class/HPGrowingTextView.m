@@ -76,8 +76,18 @@
     internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13]; 
     internalTextView.contentInset = UIEdgeInsetsZero;		
     internalTextView.showsHorizontalScrollIndicator = NO;
+    internalTextView.backgroundColor = [UIColor clearColor];
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
+    
+    r.origin.x += 8;
+    placeholderLabel = [[UILabel alloc] initWithFrame:r];
+    placeholderLabel.font = internalTextView.font;
+    placeholderLabel.numberOfLines = 0;
+    placeholderLabel.textColor = [UIColor colorWithWhite:.7 alpha:1];
+    [self addSubview:placeholderLabel];
+    [self bringSubviewToFront:internalTextView];
+    placeholder = nil;
     
     minHeight = internalTextView.frame.size.height;
     minNumberOfLines = 1;
@@ -108,6 +118,8 @@
     r.size.width -= contentInset.left + contentInset.right;
     
     internalTextView.frame = r;
+    r.origin.x+=8;
+    placeholderLabel.frame = r;
 }
 
 -(void)setContentInset:(UIEdgeInsets)inset
@@ -120,6 +132,8 @@
     r.size.width -= inset.left + inset.right;
     
     internalTextView.frame = r;
+    r.origin.x+=8;
+    placeholderLabel.frame = r;
     
     [self setMaxNumberOfLines:maxNumberOfLines];
     [self setMinNumberOfLines:minNumberOfLines];
@@ -188,8 +202,18 @@
     return minNumberOfLines;
 }
 
+-(void)setPlaceholder:(NSString *)p {
+    placeholder = [p copy];
+    placeholderLabel.text = placeholder;
+}
+
+-(NSString *)placeholder {
+    return placeholder;
+}
+
 - (void)textViewDidChange:(UITextView *)textView
 {
+    placeholderLabel.hidden = [[textView text] length] > 0;
     [self refreshHeight];
 }
 
@@ -288,6 +312,8 @@
     internalTextViewFrame.size.width = internalTextView.contentSize.width;
     
     internalTextView.frame = internalTextViewFrame;
+    internalTextViewFrame.origin.x+=8;
+    placeholderLabel.frame = internalTextViewFrame;
 }
 
 -(void)growDidStop
@@ -345,6 +371,7 @@
 -(void)setFont:(UIFont *)afont
 {
 	internalTextView.font= afont;
+    placeholderLabel.font = afont;
 	
 	[self setMaxNumberOfLines:maxNumberOfLines];
 	[self setMinNumberOfLines:minNumberOfLines];
@@ -370,13 +397,13 @@
 
 -(void)setBackgroundColor:(UIColor *)backgroundColor
 {
-  [super setBackgroundColor:backgroundColor];
-	internalTextView.backgroundColor = backgroundColor;
+    [super setBackgroundColor:backgroundColor];
+	placeholderLabel.backgroundColor = backgroundColor;
 }
 
 -(UIColor*)backgroundColor
 {
-  return internalTextView.backgroundColor;
+    return placeholderLabel.backgroundColor;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,8 @@
 @end
 
 @interface HPGrowingTextView : UIView <UITextViewDelegate> {
-	HPTextViewInternal *internalTextView;	
+	HPTextViewInternal *internalTextView;
+    UILabel *placeholderLabel;
 	
 	int minHeight;
 	int maxHeight;
@@ -58,6 +59,8 @@
 	//class properties
 	int maxNumberOfLines;
 	int minNumberOfLines;
+    
+    NSString *placeholder;
 	
 	BOOL animateHeightChange;
     NSTimeInterval animationDuration;
@@ -79,6 +82,7 @@
 @property BOOL animateHeightChange;
 @property NSTimeInterval animationDuration;
 @property (nonatomic, strong) UITextView *internalTextView;	
+@property (nonatomic, copy) NSString *placeholder;
 
 
 //uitextview properties
