@@ -59,6 +59,7 @@
     
 	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
     textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    textView.placeholder = @"This is placeholder..";
     
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 6;
