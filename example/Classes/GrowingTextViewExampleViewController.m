@@ -62,6 +62,8 @@
     
 	textView.minNumberOfLines = 1;
 	textView.maxNumberOfLines = 6;
+    // you can also set the maximum height in points with maxHeight
+    // textView.maxHeight = 200.0f;
 	textView.returnKeyType = UIReturnKeyGo; //just as an example
 	textView.font = [UIFont systemFontOfSize:15.0f];
 	textView.delegate = self;

@@ -37,13 +37,14 @@
 @implementation HPGrowingTextView
 @synthesize internalTextView;
 @synthesize delegate;
-
+@synthesize maxHeight;
+@synthesize minHeight;
 @synthesize font;
 @synthesize textColor;
 @synthesize textAlignment; 
 @synthesize selectedRange;
 @synthesize editable;
-@synthesize dataDetectorTypes; 
+@synthesize dataDetectorTypes;
 @synthesize animateHeightChange;
 @synthesize animationDuration;
 @synthesize returnKeyType;
@@ -137,6 +138,8 @@
 
 -(void)setMaxNumberOfLines:(int)n
 {
+    if(n == 0 && maxHeight > 0) return; // the user specified a maxHeight themselves.
+    
     // Use internalTextView for height calculations, thanks to Gwynne <http://blog.darkrainfall.org/>
     NSString *saveText = internalTextView.text, *newText = @"-";
     
@@ -164,8 +167,16 @@
     return maxNumberOfLines;
 }
 
+- (void)setMaxHeight:(int)height
+{
+    maxHeight = height;
+    maxNumberOfLines = 0;
+}
+
 -(void)setMinNumberOfLines:(int)m
 {
+    if(m == 0 && minHeight > 0) return; // the user specified a minHeight themselves.
+
 	// Use internalTextView for height calculations, thanks to Gwynne <http://blog.darkrainfall.org/>
     NSString *saveText = internalTextView.text, *newText = @"-";
     
@@ -191,6 +202,12 @@
 -(int)minNumberOfLines
 {
     return minNumberOfLines;
+}
+
+- (void)setMinHeight:(int)height
+{
+    minHeight = height;
+    minNumberOfLines = 0;
 }
 
 - (NSString *)placeholder

@@ -76,6 +76,8 @@
 //real class properties
 @property int maxNumberOfLines;
 @property int minNumberOfLines;
+@property (nonatomic) int maxHeight;
+@property (nonatomic) int minHeight;
 @property BOOL animateHeightChange;
 @property NSTimeInterval animationDuration;
 @property (nonatomic, strong) NSString *placeholder;
