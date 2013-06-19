@@ -47,6 +47,8 @@
 @synthesize animateHeightChange;
 @synthesize animationDuration;
 @synthesize returnKeyType;
+@dynamic placeholder;
+@dynamic placeholderColor;
 
 // having initwithcoder allows us to use HPGrowingTextView in a Nib. -- aob, 9/2011
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -88,6 +90,9 @@
     internalTextView.text = @"";
     
     [self setMaxNumberOfLines:3];
+
+    [self setPlaceholderColor:[UIColor lightGrayColor]];
+    internalTextView.displayPlaceHolder = YES;
 }
 
 -(CGSize)sizeThatFits:(CGSize)size
@@ -188,6 +193,26 @@
     return minNumberOfLines;
 }
 
+- (NSString *)placeholder
+{
+    return internalTextView.placeholder;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    [internalTextView setPlaceholder:placeholder];
+}
+
+- (UIColor *)placeholderColor
+{
+    return internalTextView.placeholderColor;
+}
+
+- (void)setPlaceholderColor:(UIColor *)placeholderColor 
+{
+    [internalTextView setPlaceholderColor:placeholderColor];
+}
+
 - (void)textViewDidChange:(UITextView *)textView
 {
     [self refreshHeight];
@@ -266,8 +291,18 @@
 		
 	}
 	
+    // Display (or not) the placeholder string
+    
+    BOOL wasDisplayingPlaceholder = internalTextView.displayPlaceHolder;
+    internalTextView.displayPlaceHolder = self.internalTextView.text.length == 0;
 	
-	if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
+    if (wasDisplayingPlaceholder != internalTextView.displayPlaceHolder) {
+        [internalTextView setNeedsDisplay];
+    }
+    
+    // Tell the delegate that the text view changed
+	
+    if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
 		[delegate growingTextViewDidChange:self];
 	}
 	
