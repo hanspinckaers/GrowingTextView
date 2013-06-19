@@ -43,7 +43,7 @@ Delegate methods
 -(void)growingTextViewDidBeginEditing:(HPGrowingTextView *)growingTextView;
 -(void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView;
 
--(BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange(NSRange)range replacementText:(NSString *)text;
+-(BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 -(void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView;
 
 // Called WITHIN animation block!
