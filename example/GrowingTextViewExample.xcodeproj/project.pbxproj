@@ -245,7 +245,7 @@
 				GCC_PREFIX_HEADER = GrowingTextViewExample_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "GrowingTextViewExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = GrowingTextViewExample;
 				SDKROOT = iphoneos;
 			};
@@ -261,7 +261,7 @@
 				GCC_PREFIX_HEADER = GrowingTextViewExample_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "GrowingTextViewExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = GrowingTextViewExample;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
