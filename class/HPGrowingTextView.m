@@ -305,6 +305,14 @@
 			internalTextView.scrollEnabled = NO;
 		}
 		
+        // scroll to caret (needed on iOS7)
+        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+        {
+            CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
+            CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
+            if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+                internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+        }
 	}
 	else {
         NSLog(@"textview height does not change");
@@ -379,7 +387,7 @@
     internalTextViewFrame.origin.x = contentInset.left;
     internalTextViewFrame.size.width = internalTextView.contentSize.width;
     
-    internalTextView.frame = internalTextViewFrame;
+    if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) internalTextView.frame = internalTextViewFrame;
 }
 
 - (void)growDidStop
