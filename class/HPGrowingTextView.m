@@ -90,7 +90,7 @@
     
     internalTextView.text = @"";
     
-    [self setMaxNumberOfLines:3];
+    //[self setMaxNumberOfLines:3];
 
     [self setPlaceholderColor:[UIColor lightGrayColor]];
     internalTextView.displayPlaceHolder = YES;
@@ -151,7 +151,7 @@
     
     internalTextView.text = newText;
     
-    maxHeight = internalTextView.contentSize.height;
+    maxHeight = [self measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -188,7 +188,7 @@
     
     internalTextView.text = newText;
     
-    minHeight = internalTextView.contentSize.height;
+    minHeight = [self measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -238,7 +238,7 @@
 - (void)refreshHeight
 {
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = internalTextView.contentSize.height;
+	NSInteger newSizeH = [self measureHeight];
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
   if (internalTextView.frame.size.height > maxHeight) newSizeH = maxHeight; // not taller than maxHeight
 
@@ -290,7 +290,6 @@
                 }	
             }
 		}
-		
         
         // if our new height is greater than the maxHeight
         // sets not set the height or move things
@@ -307,7 +306,9 @@
 		}
 		
 	}
-	
+	else {
+        NSLog(@"textview height does not change");
+    }
     // Display (or not) the placeholder string
     
     BOOL wasDisplayingPlaceholder = internalTextView.displayPlaceHolder;
@@ -323,6 +324,45 @@
 		[delegate growingTextViewDidChange:self];
 	}
 	
+}
+
+// Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
+- (CGFloat)measureHeight
+{
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    {
+        CGRect frame = internalTextView.bounds;
+        CGSize fudgeFactor;
+        // The padding added around the text on iOS6 and iOS7 is different.
+        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
+            fudgeFactor = CGSizeMake(10.0, 16.0);
+        } else {
+            fudgeFactor = CGSizeMake(16.0, 16.0);
+        }
+        frame.size.height -= fudgeFactor.height;
+        frame.size.width -= fudgeFactor.width;
+        
+        NSString *textToMeasure = internalTextView.text;
+        if ([textToMeasure hasSuffix:@"\n"])
+        {
+            textToMeasure = [NSString stringWithFormat:@"%@-",internalTextView.text];
+        }
+        
+        NSDictionary *attributes = @{NSFontAttributeName: internalTextView.font};
+        // NSString class method: boundingRectWithSize:options:attributes:context is
+        // available only on ios7.0 sdk.
+        CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:attributes
+                                                  context:nil];
+        
+        return CGRectGetHeight(size) + fudgeFactor.height;
+    }
+    else
+    {
+        return self.internalTextView.contentSize.height;
+    }
+    
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
@@ -342,12 +382,11 @@
     internalTextView.frame = internalTextViewFrame;
 }
 
--(void)growDidStop
+- (void)growDidStop
 {
 	if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
-	
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -453,6 +492,18 @@
 -(NSRange)selectedRange
 {
 	return internalTextView.selectedRange;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setIsScrollable:(BOOL)isScrollable
+{
+    internalTextView.scrollEnabled = isScrollable;
+}
+
+- (BOOL)isScrollable
+{
+    return internalTextView.scrollEnabled;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -58,6 +58,7 @@
     containerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 320, 40)];
     
 	textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(6, 3, 240, 40)];
+    textView.isScrollable = NO;
     textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
     
 	textView.minNumberOfLines = 1;
@@ -142,6 +143,7 @@
 	
 	// set views with new info
 	containerView.frame = containerFrame;
+ 
 	
 	// commit animations
 	[UIView commitAnimations];
