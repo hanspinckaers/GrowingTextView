@@ -45,6 +45,11 @@
     [self setScrollEnabled:originalValue];
 }
 
+- (void)setScrollable:(BOOL)isScrollable
+{
+    [super setScrollEnabled:isScrollable];
+}
+
 -(void)setContentOffset:(CGPoint)s
 {
 	if(self.tracking || self.decelerating){
