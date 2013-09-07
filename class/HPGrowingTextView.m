@@ -326,7 +326,7 @@
 	
 }
 
-// code from apple developer forum
+// Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
 - (CGFloat)measureHeight
 {
     if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
@@ -360,7 +360,7 @@
     }
     else
     {
-        return [self measureHeight];
+        return self.internalTextView.contentSize.height;
     }
     
 }
