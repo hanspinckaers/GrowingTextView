@@ -337,16 +337,14 @@
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
 - (CGFloat)measureHeight
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
         CGRect frame = internalTextView.bounds;
         CGSize fudgeFactor;
         // The padding added around the text on iOS6 and iOS7 is different.
-        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
-            fudgeFactor = CGSizeMake(10.0, 16.0);
-        } else {
-            fudgeFactor = CGSizeMake(16.0, 16.0);
-        }
+        fudgeFactor = CGSizeMake(10.0, 16.0);
+        
         frame.size.height -= fudgeFactor.height;
         frame.size.width -= fudgeFactor.width;
         
@@ -370,7 +368,9 @@
     {
         return self.internalTextView.contentSize.height;
     }
-    
+#else
+    return self.internalTextView.contentSize.height;
+#endif
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
