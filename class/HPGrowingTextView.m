@@ -348,18 +348,24 @@
         frame.size.height -= fudgeFactor.height;
         frame.size.width -= fudgeFactor.width;
         
-        NSString *textToMeasure = internalTextView.text;
-        if ([textToMeasure hasSuffix:@"\n"])
-        {
-            textToMeasure = [NSString stringWithFormat:@"%@-",internalTextView.text];
+        NSMutableAttributedString* textToMeasure;
+        if(internalTextView.attributedText && internalTextView.attributedText.length > 0){
+            textToMeasure = [[NSMutableAttributedString alloc] initWithAttributedString:internalTextView.attributedText];
+        }
+        else{
+            textToMeasure = [[NSMutableAttributedString alloc] initWithString:internalTextView.text];
+            [textToMeasure addAttribute:NSFontAttributeName value:internalTextView.font range:NSMakeRange(0, textToMeasure.length)];
         }
         
-        NSDictionary *attributes = @{NSFontAttributeName: internalTextView.font};
-        // NSString class method: boundingRectWithSize:options:attributes:context is
+        if ([textToMeasure.string hasSuffix:@"\n"])
+        {
+            [textToMeasure appendAttributedString:[[NSAttributedString alloc] initWithString:@"-" attributes:@{NSFontAttributeName: internalTextView.font}]];
+        }
+        
+        // NSAttributedString class method: boundingRectWithSize:options:context is
         // available only on ios7.0 sdk.
         CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
                                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                               attributes:attributes
                                                   context:nil];
         
         return CGRectGetHeight(size) + fudgeFactor.height;
