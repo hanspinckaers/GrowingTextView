@@ -24,7 +24,7 @@ UITextView borrowed properties
 NSString *text;
 UIFont *font;
 UIColor *textColor;
-UITextAlignment textAlignment;
+NSTextAlignment textAlignment;
 NSRange selectedRange;
 BOOL editable;
 UIDataDetectorTypes dataDetectorTypes;
