@@ -314,9 +314,6 @@
                 internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
         }
 	}
-	else {
-        NSLog(@"textview height does not change");
-    }
     // Display (or not) the placeholder string
     
     BOOL wasDisplayingPlaceholder = internalTextView.displayPlaceHolder;
