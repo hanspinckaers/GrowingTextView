@@ -80,19 +80,19 @@
 }
 
 //real class properties
-@property int maxNumberOfLines;
-@property int minNumberOfLines;
+@property (nonatomic) int maxNumberOfLines;
+@property (nonatomic) int minNumberOfLines;
 @property (nonatomic) int maxHeight;
 @property (nonatomic) int minHeight;
-@property BOOL animateHeightChange;
-@property NSTimeInterval animationDuration;
+@property (nonatomic) BOOL animateHeightChange;
+@property (nonatomic) NSTimeInterval animationDuration;
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong) UIColor *placeholderColor;
 @property (nonatomic, strong) UITextView *internalTextView;	
 
 
 //uitextview properties
-@property(unsafe_unretained) NSObject<HPGrowingTextViewDelegate> *delegate;
+@property(nonatomic, unsafe_unretained) NSObject<HPGrowingTextViewDelegate> *delegate;
 @property(nonatomic,strong) NSString *text;
 @property(nonatomic,strong) UIFont *font;
 @property(nonatomic,strong) UIColor *textColor;

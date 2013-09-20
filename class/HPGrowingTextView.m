@@ -82,7 +82,7 @@
     internalTextView.text = @"-";
     [self addSubview:internalTextView];
     
-    minHeight = internalTextView.frame.size.height;
+    minHeight = (int)internalTextView.frame.size.height;
     minNumberOfLines = 1;
     
     animateHeightChange = YES;
@@ -151,7 +151,7 @@
     
     internalTextView.text = newText;
     
-    maxHeight = [self measureHeight];
+    maxHeight = (int)[self measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -188,7 +188,7 @@
     
     internalTextView.text = newText;
     
-    minHeight = [self measureHeight];
+    minHeight = (int)[self measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -238,7 +238,7 @@
 - (void)refreshHeight
 {
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = [self measureHeight];
+	NSInteger newSizeH = (int)[self measureHeight];
 	if(newSizeH < minHeight || !internalTextView.hasText) newSizeH = minHeight; //not smalles than minHeight
   if (internalTextView.frame.size.height > maxHeight) newSizeH = maxHeight; // not taller than maxHeight
 
