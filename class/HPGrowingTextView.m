@@ -543,6 +543,18 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (void)setKeyboardType:(UIKeyboardType)keyType
+{
+	internalTextView.keyboardType = keyType;
+}
+
+- (UIKeyboardType)keyboardType
+{
+	return internalTextView.keyboardType;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
 {
   internalTextView.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically;
