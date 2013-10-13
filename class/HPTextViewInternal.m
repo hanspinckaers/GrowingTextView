@@ -103,12 +103,7 @@
     [super drawRect:rect];
     if (displayPlaceHolder && placeholder && placeholderColor) {
         [placeholderColor set];
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
         [placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
-#else
-        [placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f)
-                 withAttributes:@{NSFontAttributeName: self.font, NSForegroundColorAttributeName: placeholderColor}];
-#endif
     }
 }
 
