@@ -90,7 +90,7 @@
     
     internalTextView.text = @"";
     
-    //[self setMaxNumberOfLines:3];
+    [self setMaxNumberOfLines:3];
 
     [self setPlaceholderColor:[UIColor lightGrayColor]];
     internalTextView.displayPlaceHolder = YES;
