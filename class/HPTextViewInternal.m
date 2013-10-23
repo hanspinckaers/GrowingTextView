@@ -45,9 +45,21 @@
     [self setScrollEnabled:originalValue];
 }
 
-- (void)setScrollable:(BOOL)isScrollable
+/* use setScrollEnabled instead
+ - (void)setScrollable:(BOOL)isScrollable
 {
     [super setScrollEnabled:isScrollable];
+}
+ */
+
+- (void) setScrollEnabled:(BOOL)scrollEnabled {
+    //ios7 hack. UITextView in ios7 has problem in last line if scrollEnabled = NO;
+    //Revisit this to check when future ios7+ releases are done
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
+        [super setScrollEnabled:YES];
+    } else {
+        [super setScrollEnabled:scrollEnabled];
+    }
 }
 
 -(void)setContentOffset:(CGPoint)s
