@@ -29,7 +29,7 @@
 #import "HPTextViewInternal.h"
 
 @interface HPGrowingTextView(private)
--(void)commonInitialiser;
+-(void)commonInitialiser:(NSTextContainer *)textContainer;
 -(void)resizeTextView:(NSInteger)newSizeH;
 -(void)growDidStop;
 @end
@@ -55,25 +55,32 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder])) {
-        [self commonInitialiser];
+        [self commonInitialiser:nil];
     }
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        [self commonInitialiser];
+        [self commonInitialiser:nil];
     }
     return self;
 }
 
--(void)commonInitialiser
+- (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
+    if ((self = [super initWithFrame:frame])) {
+        [self commonInitialiser:textContainer];
+    }
+    return self;
+}
+
+-(void)commonInitialiser:(NSTextContainer *)textContainer
 {
     // Initialization code
     CGRect r = self.frame;
     r.origin.y = 0;
     r.origin.x = 0;
-    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
+    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
     internalTextView.delegate = self;
     internalTextView.scrollEnabled = NO;
     internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13]; 

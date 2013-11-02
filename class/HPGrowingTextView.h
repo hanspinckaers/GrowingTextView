@@ -107,6 +107,8 @@
 @property (nonatomic) BOOL isScrollable;
 @property(nonatomic) BOOL enablesReturnKeyAutomatically;
 
+- (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer;
+
 //uitextview methods
 //need others? use .internalTextView
 - (BOOL)becomeFirstResponder;
