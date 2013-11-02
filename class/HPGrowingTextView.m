@@ -29,7 +29,7 @@
 #import "HPTextViewInternal.h"
 
 @interface HPGrowingTextView(private)
--(void)commonInitialiser:(NSTextContainer *)textContainer;
+-(void)commonInitialiser;
 -(void)resizeTextView:(NSInteger)newSizeH;
 -(void)growDidStop;
 @end
@@ -55,18 +55,19 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder])) {
-        [self commonInitialiser:nil];
+        [self commonInitialiser];
     }
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        [self commonInitialiser:nil];
+        [self commonInitialiser];
     }
     return self;
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 - (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
     if ((self = [super initWithFrame:frame])) {
         [self commonInitialiser:textContainer];
@@ -74,13 +75,24 @@
     return self;
 }
 
+-(void)commonInitialiser {
+    [self commonInitialiser:nil];
+}
+
 -(void)commonInitialiser:(NSTextContainer *)textContainer
+#else
+-(void)commonInitialiser
+#endif
 {
     // Initialization code
     CGRect r = self.frame;
     r.origin.y = 0;
     r.origin.x = 0;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
+#else
+    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
+#endif
     internalTextView.delegate = self;
     internalTextView.scrollEnabled = NO;
     internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13]; 

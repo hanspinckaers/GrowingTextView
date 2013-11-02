@@ -107,7 +107,9 @@
 @property (nonatomic) BOOL isScrollable;
 @property(nonatomic) BOOL enablesReturnKeyAutomatically;
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 - (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer;
+#endif
 
 //uitextview methods
 //need others? use .internalTextView
