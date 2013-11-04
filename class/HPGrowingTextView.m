@@ -67,13 +67,32 @@
     return self;
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+- (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
+    if ((self = [super initWithFrame:frame])) {
+        [self commonInitialiser:textContainer];
+    }
+    return self;
+}
+
+-(void)commonInitialiser {
+    [self commonInitialiser:nil];
+}
+
+-(void)commonInitialiser:(NSTextContainer *)textContainer
+#else
 -(void)commonInitialiser
+#endif
 {
     // Initialization code
     CGRect r = self.frame;
     r.origin.y = 0;
     r.origin.x = 0;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
+#else
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
+#endif
     internalTextView.delegate = self;
     internalTextView.scrollEnabled = NO;
     internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13]; 
