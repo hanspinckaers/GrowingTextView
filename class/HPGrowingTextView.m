@@ -67,7 +67,7 @@
     return self;
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 - (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
     if ((self = [super initWithFrame:frame])) {
         [self commonInitialiser:textContainer];
@@ -88,7 +88,7 @@
     CGRect r = self.frame;
     r.origin.y = 0;
     r.origin.x = 0;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
 #else
     internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
