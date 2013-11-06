@@ -52,6 +52,7 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
+    //test
 	self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     self.view.backgroundColor = [UIColor colorWithRed:219.0f/255.0f green:226.0f/255.0f blue:237.0f/255.0f alpha:1];
 	
@@ -197,6 +198,8 @@
 	// e.g. self.myOutlet = nil;
 }
 
-
+/*
+ 我就不信传不上去    222333
+ */
 
 @end
