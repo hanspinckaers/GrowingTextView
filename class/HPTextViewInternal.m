@@ -110,6 +110,20 @@
     [super setContentSize:contentSize];
 }
 
+- (void)setPlaceholder:(NSString *)_placeholder
+{
+#if ! __has_feature(objc_arc)
+    if (placeholder)
+    {
+        [placeholder release];
+    }
+    placeholder = [_placeholder retain];
+    [self setNeedsDisplay];
+#else
+    [self setNeedsDisplay];
+#endif
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
