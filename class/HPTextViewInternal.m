@@ -117,11 +117,9 @@
     {
         [placeholder release];
     }
-    placeholder = [_placeholder retain];
-    [self setNeedsDisplay];
-#else
-    [self setNeedsDisplay];
+    placeholder = [_placeholder retain];  
 #endif
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
