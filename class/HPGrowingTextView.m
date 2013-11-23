@@ -237,6 +237,7 @@
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [internalTextView setPlaceholder:placeholder];
+    [internalTextView setNeedsDisplay];
 }
 
 - (UIColor *)placeholderColor
