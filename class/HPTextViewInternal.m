@@ -30,10 +30,6 @@
 
 @implementation HPTextViewInternal
 
-@synthesize placeholder;
-@synthesize placeholderColor;
-@synthesize displayPlaceHolder;
-
 -(void)setText:(NSString *)text
 {
     BOOL originalValue = self.scrollEnabled;
@@ -101,10 +97,24 @@
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
-    if (displayPlaceHolder && placeholder && placeholderColor) {
-        [placeholderColor set];
-        [placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+    if (self.displayPlaceHolder && self.placeholder && self.placeholderColor)
+    {
+#ifdef __IPHONE_7_0
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = self.textAlignment;
+        [self.placeholder drawInRect:CGRectMake(5, 8 + self.contentInset.top, self.frame.size.width-self.contentInset.left, self.frame.size.height- self.contentInset.top) withAttributes:@{NSFontAttributeName:self.font, NSForegroundColorAttributeName:self.placeholderColor, NSParagraphStyleAttributeName:paragraphStyle}];
+#else
+        [self.placeholderColor set];
+        [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+#endif
     }
+}
+
+-(void)setPlaceholder:(NSString *)placeholder
+{
+	_placeholder = placeholder;
+	
+	[self setNeedsDisplay];
 }
 
 @end
