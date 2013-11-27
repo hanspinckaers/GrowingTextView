@@ -28,8 +28,6 @@
 #import "HPGrowingTextView.h"
 #import "HPTextViewInternal.h"
 
-#define INTERNAL_TEXTVIEW_HEIGHT_OFFSET 9
-
 @interface HPGrowingTextView(private)
 -(void)commonInitialiser;
 -(void)resizeTextView:(NSInteger)newSizeH;
@@ -361,7 +359,7 @@
 - (CGFloat)measureHeight
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height + INTERNAL_TEXTVIEW_HEIGHT_OFFSET);
+    return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
 #else
     return self.internalTextView.contentSize.height;
 #endif
