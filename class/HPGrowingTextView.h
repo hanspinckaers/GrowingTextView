@@ -55,7 +55,7 @@
 - (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView;
 @end
 
-@interface HPGrowingTextView : UIView <UITextViewDelegate> {
+@interface HPGrowingTextView : UIView <UITextViewDelegate, NSLayoutManagerDelegate> {
 	HPTextViewInternal *internalTextView;	
 	
 	int minHeight;
@@ -90,6 +90,7 @@
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong) UIColor *placeholderColor;
 @property (nonatomic, strong) UITextView *internalTextView;	
+@property (nonatomic) CGFloat textLineSpacing;
 
 
 //uitextview properties
