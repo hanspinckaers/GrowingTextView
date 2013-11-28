@@ -41,9 +41,21 @@
     [self setScrollEnabled:originalValue];
 }
 
-- (void)setScrollable:(BOOL)isScrollable
+/* use setScrollEnabled instead
+ - (void)setScrollable:(BOOL)isScrollable
 {
     [super setScrollEnabled:isScrollable];
+}
+ */
+
+- (void) setScrollEnabled:(BOOL)scrollEnabled {
+    //ios7 hack. UITextView in ios7 has problem in last line if scrollEnabled = NO;
+    //Revisit this to check when future ios7+ releases are done
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
+        [super setScrollEnabled:YES];
+    } else {
+        [super setScrollEnabled:scrollEnabled];
+    }
 }
 
 -(void)setContentOffset:(CGPoint)s
@@ -102,10 +114,11 @@
 #ifdef __IPHONE_7_0
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.alignment = self.textAlignment;
+        paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
         [self.placeholder drawInRect:CGRectMake(5, 8 + self.contentInset.top, self.frame.size.width-self.contentInset.left, self.frame.size.height- self.contentInset.top) withAttributes:@{NSFontAttributeName:self.font, NSForegroundColorAttributeName:self.placeholderColor, NSParagraphStyleAttributeName:paragraphStyle}];
 #else
         [self.placeholderColor set];
-        [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+        [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font lineBreakMode:NSLineBreakByTruncatingTail];
 #endif
     }
 }
