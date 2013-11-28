@@ -99,6 +99,7 @@
     internalTextView.contentInset = UIEdgeInsetsZero;		
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
+    internalTextView.contentMode = UIViewContentModeRedraw;
     [self addSubview:internalTextView];
     
     minHeight = internalTextView.frame.size.height;
@@ -237,6 +238,7 @@
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [internalTextView setPlaceholder:placeholder];
+    [internalTextView setNeedsDisplay];
 }
 
 - (UIColor *)placeholderColor
