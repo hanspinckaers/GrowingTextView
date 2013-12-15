@@ -360,42 +360,7 @@
 - (CGFloat)measureHeight
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-    {
-        CGRect frame = internalTextView.bounds;
-        CGSize fudgeFactor;
-        // The padding added around the text on iOS6 and iOS7 is different.
-        fudgeFactor = CGSizeMake(10.0, 16.0);
-        
-        frame.size.height -= fudgeFactor.height;
-        frame.size.width -= fudgeFactor.width;
-        
-        NSMutableAttributedString* textToMeasure;
-        if(internalTextView.attributedText && internalTextView.attributedText.length > 0){
-            textToMeasure = [[NSMutableAttributedString alloc] initWithAttributedString:internalTextView.attributedText];
-        }
-        else{
-            textToMeasure = [[NSMutableAttributedString alloc] initWithString:internalTextView.text];
-            [textToMeasure addAttribute:NSFontAttributeName value:internalTextView.font range:NSMakeRange(0, textToMeasure.length)];
-        }
-        
-        if ([textToMeasure.string hasSuffix:@"\n"])
-        {
-            [textToMeasure appendAttributedString:[[NSAttributedString alloc] initWithString:@"-" attributes:@{NSFontAttributeName: internalTextView.font}]];
-        }
-        
-        // NSAttributedString class method: boundingRectWithSize:options:context is
-        // available only on ios7.0 sdk.
-        CGRect size = [textToMeasure boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), MAXFLOAT)
-                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                                  context:nil];
-        
-        return CGRectGetHeight(size) + fudgeFactor.height;
-    }
-    else
-    {
-        return self.internalTextView.contentSize.height;
-    }
+    return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
 #else
     return self.internalTextView.contentSize.height;
 #endif
