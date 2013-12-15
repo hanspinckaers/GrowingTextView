@@ -333,13 +333,11 @@
         [internalTextView setNeedsDisplay];
     }
     
+    
     // scroll to caret (needed on iOS7)
     if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
-        CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
-        CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-        if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-            internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+        [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
     }
     
     // Tell the delegate that the text view changed
@@ -356,6 +354,14 @@
 #else
     return self.internalTextView.contentSize.height;
 #endif
+}
+
+- (void)resetScrollPositionForIOS7
+{
+    CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
+    CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
+    if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+        internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
@@ -379,10 +385,7 @@
     // scroll to caret (needed on iOS7)
     if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
     {
-        CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
-        CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-        if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-            internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+        [self resetScrollPositionForIOS7];
     }
     
 	if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
