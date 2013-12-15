@@ -263,20 +263,28 @@
 	if (newSizeH < minHeight || !internalTextView.hasText) {
         newSizeH = minHeight; //not smalles than minHeight
     }
-    else if (maxHeight && internalTextView.frame.size.height > maxHeight) {
+    else if (maxHeight && newSizeH > maxHeight) {
         newSizeH = maxHeight; // not taller than maxHeight
     }
     
 	if (internalTextView.frame.size.height != newSizeH)
 	{
-        // [fixed] Pasting too much text into the view failed to fire the height change, 
-        // thanks to Gwynne <http://blog.darkrainfall.org/>
-        
-        if (newSizeH > maxHeight && internalTextView.frame.size.height <= maxHeight)
+        // if our new height is greater than the maxHeight
+        // sets not set the height or move things
+        // around and enable scrolling
+        if (newSizeH >= maxHeight)
         {
-            newSizeH = maxHeight;
+            if(!internalTextView.scrollEnabled){
+                internalTextView.scrollEnabled = YES;
+                [internalTextView flashScrollIndicators];
+            }
+            
+        } else {
+            internalTextView.scrollEnabled = NO;
         }
         
+        // [fixed] Pasting too much text into the view failed to fire the height change,
+        // thanks to Gwynne <http://blog.darkrainfall.org/>
 		if (newSizeH <= maxHeight)
 		{
             if(animateHeightChange) {
@@ -315,29 +323,6 @@
                 }	
             }
 		}
-        
-        // if our new height is greater than the maxHeight
-        // sets not set the height or move things
-        // around and enable scrolling
-		if (newSizeH >= maxHeight)
-		{
-			if(!internalTextView.scrollEnabled){
-				internalTextView.scrollEnabled = YES;
-				[internalTextView flashScrollIndicators];
-			}
-			
-		} else {
-			internalTextView.scrollEnabled = NO;
-		}
-		
-        // scroll to caret (needed on iOS7)
-        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-        {
-            CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
-            CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-            if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-                internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
-        }
 	}
     // Display (or not) the placeholder string
     
@@ -348,12 +333,19 @@
         [internalTextView setNeedsDisplay];
     }
     
+    // scroll to caret (needed on iOS7)
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    {
+        CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
+        CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
+        if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+            internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+    }
+    
     // Tell the delegate that the text view changed
-	
     if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
 		[delegate growingTextViewDidChange:self];
 	}
-	
 }
 
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
@@ -413,13 +405,17 @@
     
     internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
     internalTextViewFrame.origin.x = contentInset.left;
-    internalTextViewFrame.size.width = internalTextView.contentSize.width;
     
     if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) internalTextView.frame = internalTextViewFrame;
 }
 
 - (void)growDidStop
 {
+    CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
+    CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
+    if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+        internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+
 	if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
