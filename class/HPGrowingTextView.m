@@ -376,11 +376,15 @@
 
 - (void)growDidStop
 {
-    CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
-    CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-    if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-        internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
-
+    // scroll to caret (needed on iOS7)
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    {
+        CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
+        CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
+        if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+            internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+    }
+    
 	if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
