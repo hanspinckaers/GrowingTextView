@@ -349,11 +349,13 @@
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
 - (CGFloat)measureHeight
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
-#else
-    return self.internalTextView.contentSize.height;
-#endif
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    {
+        return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
+    }
+    else {
+        return self.internalTextView.contentSize.height;
+    }
 }
 
 - (void)resetScrollPositionForIOS7

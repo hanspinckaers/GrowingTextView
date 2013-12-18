@@ -99,7 +99,7 @@
     [super drawRect:rect];
     if (self.displayPlaceHolder && self.placeholder && self.placeholderColor)
     {
-        if ([self.placeholder respondsToSelector:@selector(drawInRect:withAttributes:)])
+        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
         {
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             paragraphStyle.alignment = self.textAlignment;
