@@ -362,8 +362,8 @@
 {
     CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
     CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-    if(internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-        internalTextView.contentOffset = CGPointMake(0, MIN(caretY, internalTextView.contentSize.height));
+    if (internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+        internalTextView.contentOffset = CGPointMake(0, caretY);
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
