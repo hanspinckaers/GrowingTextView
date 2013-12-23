@@ -28,6 +28,13 @@
 #import "HPTextViewInternal.h"
 
 
+@interface HPTextViewInternal ()
+{
+    BOOL _editActionCallInProgress;
+}
+
+@end
+
 @implementation HPTextViewInternal
 
 -(void)setText:(NSString *)text
@@ -116,5 +123,85 @@
 	
 	[self setNeedsDisplay];
 }
+
+
+#pragma mark - copy/paste delegation support
+
+
+// The following code allows you to to override the copy/paste functionality by subclassing HPGrowingTextView.
+// In your subclass you may override canPerformAction:withSender as well implement any of the UIResponderEditAction
+// informal protocol methods. You may safely call the methods in self.internalTextView to get the default implementation.
+
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks" // yes, we know, but it's ok
+
+
+-(BOOL)delegatePerformEditAction:(SEL)sel sender:(id)sender
+{
+    if ( !_editActionCallInProgress && [self.delegate respondsToSelector:sel] )
+    {
+        _editActionCallInProgress = YES;
+        [self.delegate performSelector:sel withObject:sender];
+        _editActionCallInProgress = NO;
+        return YES;  // handled
+    }
+    else
+        return NO;  // not handled, call super
+}
+
+
+#pragma clang diagnostic pop
+
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    if ( !_editActionCallInProgress )
+    {
+        _editActionCallInProgress = YES;
+        BOOL result = [(id)self.delegate canPerformAction:action withSender:sender];
+        _editActionCallInProgress = NO;
+        
+        return result;
+    }
+    else
+        return [super canPerformAction:action withSender:sender];
+}
+
+
+-(void)copy:(id)sender
+{
+    if ( ![self delegatePerformEditAction:_cmd sender:sender] )
+        [super copy:sender];
+}
+
+
+-(void)cut:(id)sender
+{
+    if ( ![self delegatePerformEditAction:_cmd sender:sender] )
+        [super cut:sender];
+}
+
+
+-(void)paste:(id)sender
+{
+    if ( ![self delegatePerformEditAction:_cmd sender:sender] )
+        [super paste:sender];
+}
+
+
+-(void)select:(id)sender
+{
+    if ( ![self delegatePerformEditAction:_cmd sender:sender] )
+        [super select:sender];
+}
+
+
+-(void)selectAll:(id)sender
+{
+    if ( ![self delegatePerformEditAction:_cmd sender:sender] )
+        [super selectAll:sender];
+}
+
 
 @end
