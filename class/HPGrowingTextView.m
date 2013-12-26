@@ -643,7 +643,6 @@
 			if (![delegate performSelector:@selector(growingTextViewShouldReturn:) withObject:self]) {
 				return YES;
 			} else {
-				[textView resignFirstResponder];
 				return NO;
 			}
 		}
