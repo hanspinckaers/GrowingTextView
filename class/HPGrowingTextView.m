@@ -107,6 +107,7 @@
     
     animateHeightChange = YES;
     animationDuration = 0.1f;
+    willRefreshHeight = NO;
     
     internalTextView.text = @"";
     
@@ -253,97 +254,114 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    [self refreshHeight];
+    [self doRefreshHeight];
+}
+
+- (void)doRefreshHeight
+{
+    // if we use korean keyboard, UITextView occasionally fires 2 textViewDidChange events simultaneously.
+    // for example, there is "버그버그ㅂ". we presse the "ㅓ" key. then text is changed to "버그버그버"
+    // but UITextView fires 2 textViewDidChange events. The first event is "버그버그ㅂ" to "버그버그". The second event is "버그버그" to "버그버그버".
+    // so we should use the last event of these events.
+    if (!willRefreshHeight) {
+        willRefreshHeight = YES;
+        [self performSelector:@selector(refreshHeight) withObject:nil afterDelay:0];
+    }
 }
 
 - (void)refreshHeight
 {
-	//size of content, so we can set the frame of self
-	NSInteger newSizeH = [self measureHeight];
-	if (newSizeH < minHeight || !internalTextView.hasText) {
-        newSizeH = minHeight; //not smalles than minHeight
-    }
-    else if (maxHeight && newSizeH > maxHeight) {
-        newSizeH = maxHeight; // not taller than maxHeight
-    }
-    
-	if (internalTextView.frame.size.height != newSizeH)
-	{
-        // if our new height is greater than the maxHeight
-        // sets not set the height or move things
-        // around and enable scrolling
-        if (newSizeH >= maxHeight)
-        {
-            if(!internalTextView.scrollEnabled){
-                internalTextView.scrollEnabled = YES;
-                [internalTextView flashScrollIndicators];
-            }
-            
-        } else {
-            internalTextView.scrollEnabled = NO;
+    @try {
+        //size of content, so we can set the frame of self
+        NSInteger newSizeH = [self measureHeight];
+        if (newSizeH < minHeight || !internalTextView.hasText) {
+            newSizeH = minHeight; //not smalles than minHeight
+        }
+        else if (maxHeight && newSizeH > maxHeight) {
+            newSizeH = maxHeight; // not taller than maxHeight
         }
         
-        // [fixed] Pasting too much text into the view failed to fire the height change,
-        // thanks to Gwynne <http://blog.darkrainfall.org/>
-		if (newSizeH <= maxHeight)
-		{
-            if(animateHeightChange) {
-                
-                if ([UIView resolveClassMethod:@selector(animateWithDuration:animations:)]) {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
-                    [UIView animateWithDuration:animationDuration 
-                                          delay:0 
-                                        options:(UIViewAnimationOptionAllowUserInteraction|
-                                                 UIViewAnimationOptionBeginFromCurrentState)                                 
-                                     animations:^(void) {
-                                         [self resizeTextView:newSizeH];
-                                     } 
-                                     completion:^(BOOL finished) {
-                                         if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
-                                             [delegate growingTextView:self didChangeHeight:newSizeH];
-                                         }
-                                     }];
-#endif
-                } else {
-                    [UIView beginAnimations:@"" context:nil];
-                    [UIView setAnimationDuration:animationDuration];
-                    [UIView setAnimationDelegate:self];
-                    [UIView setAnimationDidStopSelector:@selector(growDidStop)];
-                    [UIView setAnimationBeginsFromCurrentState:YES];
-                    [self resizeTextView:newSizeH];
-                    [UIView commitAnimations];
+        if (internalTextView.frame.size.height != newSizeH)
+        {
+            // if our new height is greater than the maxHeight
+            // sets not set the height or move things
+            // around and enable scrolling
+            if (newSizeH >= maxHeight)
+            {
+                if(!internalTextView.scrollEnabled){
+                    internalTextView.scrollEnabled = YES;
+                    [internalTextView flashScrollIndicators];
                 }
-            } else {
-                [self resizeTextView:newSizeH];                
-                // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
-                // thanks to Gwynne <http://blog.darkrainfall.org/>
                 
-                if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
-                    [delegate growingTextView:self didChangeHeight:newSizeH];
-                }	
+            } else {
+                internalTextView.scrollEnabled = NO;
             }
-		}
-	}
-    // Display (or not) the placeholder string
-    
-    BOOL wasDisplayingPlaceholder = internalTextView.displayPlaceHolder;
-    internalTextView.displayPlaceHolder = self.internalTextView.text.length == 0;
-	
-    if (wasDisplayingPlaceholder != internalTextView.displayPlaceHolder) {
-        [internalTextView setNeedsDisplay];
+            
+            // [fixed] Pasting too much text into the view failed to fire the height change,
+            // thanks to Gwynne <http://blog.darkrainfall.org/>
+            if (newSizeH <= maxHeight)
+            {
+                if(animateHeightChange) {
+                    
+                    if ([UIView resolveClassMethod:@selector(animateWithDuration:animations:)]) {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+                        [UIView animateWithDuration:animationDuration
+                                              delay:0
+                                            options:(UIViewAnimationOptionAllowUserInteraction|
+                                                     UIViewAnimationOptionBeginFromCurrentState)
+                                         animations:^(void) {
+                                             [self resizeTextView:newSizeH];
+                                         }
+                                         completion:^(BOOL finished) {
+                                             if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
+                                                 [delegate growingTextView:self didChangeHeight:newSizeH];
+                                             }
+                                         }];
+#endif
+                    } else {
+                        [UIView beginAnimations:@"" context:nil];
+                        [UIView setAnimationDuration:animationDuration];
+                        [UIView setAnimationDelegate:self];
+                        [UIView setAnimationDidStopSelector:@selector(growDidStop)];
+                        [UIView setAnimationBeginsFromCurrentState:YES];
+                        [self resizeTextView:newSizeH];
+                        [UIView commitAnimations];
+                    }
+                } else {
+                    [self resizeTextView:newSizeH];
+                    // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
+                    // thanks to Gwynne <http://blog.darkrainfall.org/>
+                    
+                    if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
+                        [delegate growingTextView:self didChangeHeight:newSizeH];
+                    }
+                }
+            }
+        }
+        // Display (or not) the placeholder string
+        
+        BOOL wasDisplayingPlaceholder = internalTextView.displayPlaceHolder;
+        internalTextView.displayPlaceHolder = self.internalTextView.text.length == 0;
+        
+        if (wasDisplayingPlaceholder != internalTextView.displayPlaceHolder) {
+            [internalTextView setNeedsDisplay];
+        }
+        
+        
+        // scroll to caret (needed on iOS7)
+        if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+        {
+            [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
+        }
+        
+        // Tell the delegate that the text view changed
+        if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
+            [delegate growingTextViewDidChange:self];
+        }
     }
-    
-    
-    // scroll to caret (needed on iOS7)
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-    {
-        [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
+    @finally {
+        willRefreshHeight = NO;
     }
-    
-    // Tell the delegate that the text view changed
-    if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
-		[delegate growingTextViewDidChange:self];
-	}
 }
 
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
