@@ -362,8 +362,13 @@
 {
     CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
     CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-    if (internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+    if (internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY) {
         internalTextView.contentOffset = CGPointMake(0, caretY);
+        
+        BOOL scrollEnabled = internalTextView.scrollEnabled;
+        internalTextView.scrollEnabled = !scrollEnabled;
+        internalTextView.scrollEnabled = scrollEnabled;
+    }
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
