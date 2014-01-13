@@ -661,6 +661,22 @@
 	}
 }
 
+- (void)deleteBackward
+{
+    [self.internalTextView deleteBackward];
+    if (![self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
+        [self refreshHeight];
+        [self resetScrollPositionForIOS7];
+    }
+}
 
+- (void)insertText:(NSString *)text
+{
+    [self.internalTextView insertText:text];
+    if (![self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)]) {
+        [self refreshHeight];
+        [self resetScrollPositionForIOS7];
+    }
+}
 
 @end
