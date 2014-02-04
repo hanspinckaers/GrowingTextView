@@ -129,11 +129,16 @@
     [super layoutSubviews];
     
 	CGRect r = self.bounds;
-	r.origin.y = 0;
+	r.origin.y = contentInset.top;
 	r.origin.x = contentInset.left;
     r.size.width -= contentInset.left + contentInset.right;
+    r.size.height -= contentInset.top + contentInset.bottom;
     
-    internalTextView.frame = r;
+    // Fixing vertical fighting during height animations.
+    if (!CGRectEqualToRect(internalTextView.frame, r))
+    {
+        internalTextView.frame = r;
+    }
 }
 
 -(void)setContentInset:(UIEdgeInsets)inset
@@ -141,9 +146,10 @@
     contentInset = inset;
     
     CGRect r = self.frame;
-    r.origin.y = inset.top - inset.bottom;
+    r.origin.y = inset.top;
     r.origin.x = inset.left;
     r.size.width -= inset.left + inset.right;
+    r.size.height -= inset.top + inset.bottom;
     
     internalTextView.frame = r;
     
@@ -259,7 +265,7 @@
 - (void)refreshHeight
 {
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = [self measureHeight];
+	NSInteger newSizeH = [self measureHeight] + contentInset.top + contentInset.bottom;
 	if (newSizeH < minHeight || !internalTextView.hasText) {
         newSizeH = minHeight; //not smalles than minHeight
     }
@@ -376,8 +382,10 @@
     internalTextViewFrame.size.height = newSizeH; // + padding
     self.frame = internalTextViewFrame;
     
-    internalTextViewFrame.origin.y = contentInset.top - contentInset.bottom;
+    internalTextViewFrame.origin.y = contentInset.top;
     internalTextViewFrame.origin.x = contentInset.left;
+    internalTextViewFrame.size.width -= contentInset.left + contentInset.right;
+    internalTextViewFrame.size.height -= contentInset.top + contentInset.bottom;
     
     if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) internalTextView.frame = internalTextViewFrame;
 }
