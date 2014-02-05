@@ -35,6 +35,7 @@
 @end
 
 @implementation HPGrowingTextView
+@synthesize textLineSpacing;
 @synthesize internalTextView;
 @synthesize delegate;
 @synthesize maxHeight;
@@ -114,6 +115,8 @@
 
     [self setPlaceholderColor:[UIColor lightGrayColor]];
     internalTextView.displayPlaceHolder = YES;
+    internalTextView.layoutManager.delegate = self;
+    textLineSpacing = 0.0f;
 }
 
 -(CGSize)sizeThatFits:(CGSize)size
@@ -238,6 +241,17 @@
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [internalTextView setPlaceholder:placeholder];
+    [internalTextView setNeedsDisplay];
+}
+
+- (CGFloat)textLineSpacing
+{
+    return self.textLineSpacing;
+}
+
+- (void)setTextLineSpacing:(CGFloat)lineSpacing
+{
+    textLineSpacing = lineSpacing;
     [internalTextView setNeedsDisplay];
 }
 
@@ -661,6 +675,12 @@
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - NSLayoutManagerDelegate
 
+- (CGFloat)layoutManager:(NSLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect {
+  return self.textLineSpacing;
+}
 
 @end
