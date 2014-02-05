@@ -278,20 +278,6 @@
     
     if (internalTextView.frame.size.height != newSizeH)
     {
-        // if our new height is greater than the maxHeight
-        // sets not set the height or move things
-        // around and enable scrolling
-        if (newSizeH >= maxHeight)
-        {
-            if(!internalTextView.scrollEnabled){
-                internalTextView.scrollEnabled = YES;
-                [internalTextView flashScrollIndicators];
-            }
-            
-        } else {
-            internalTextView.scrollEnabled = NO;
-        }
-        
         // [fixed] Pasting too much text into the view failed to fire the height change,
         // thanks to Gwynne <http://blog.darkrainfall.org/>
         if (newSizeH <= maxHeight)
@@ -372,7 +358,30 @@
     CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
     CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
     if (internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
+    {
         internalTextView.contentOffset = CGPointMake(0, caretY);
+    }
+}
+
+- (void)correctScrolling
+{
+    // If our new height is greater than the maxHeight
+    // set scroll enabled.
+    if (self.frame.size.height >= maxHeight)
+    {
+        if (!internalTextView.scrollEnabled) {
+            internalTextView.scrollEnabled = YES;
+            [internalTextView flashScrollIndicators];
+            
+            // When copy and pasting a multi-line text if height exceeds maxheight
+            // the text view does not scroll even though scrollEnabled is set ON.
+            // Laying out the subviews appears to fixes it.
+            [internalTextView performSelector:@selector(setNeedsLayout) withObject:nil afterDelay:.3];
+        }
+        
+    } else {
+        internalTextView.scrollEnabled = NO;
+    }
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
@@ -390,7 +399,11 @@
     internalTextViewFrame.size.width -= contentInset.left + contentInset.right;
     internalTextViewFrame.size.height -= contentInset.top + contentInset.bottom;
     
-    if(!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) internalTextView.frame = internalTextViewFrame;
+    if (!CGRectEqualToRect(internalTextView.frame, internalTextViewFrame)) {
+        internalTextView.frame = internalTextViewFrame;
+    }
+    
+    [self correctScrolling];
 }
 
 - (void)growDidStop
