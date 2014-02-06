@@ -269,8 +269,8 @@
 {
     //size of content, so we can set the frame of self
     NSInteger newSizeH = [self measureHeight] + contentInset.top + contentInset.bottom;
-    if (newSizeH < minHeight || !internalTextView.hasText) {
-        newSizeH = minHeight; //not smalles than minHeight
+    if (newSizeH < minHeight + contentInset.top + contentInset.bottom || !internalTextView.hasText) {
+        newSizeH = minHeight + contentInset.top + contentInset.bottom; //not smalles than minHeight
     }
     else if (maxHeight && newSizeH > maxHeight) {
         newSizeH = maxHeight; // not taller than maxHeight
