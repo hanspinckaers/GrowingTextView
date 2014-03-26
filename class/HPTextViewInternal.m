@@ -61,13 +61,14 @@
 		float bottomOffset = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom);
 		if(s.y < bottomOffset && self.scrollEnabled){            
             UIEdgeInsets insets = self.contentInset;
-            insets.bottom = 8;
+            insets.bottom = 0;
             insets.top = 0;
             self.contentInset = insets;            
         }
 	}
     
     // Fix "overscrolling" bug
+    
     if (s.y > self.contentSize.height - self.frame.size.height && !self.decelerating && !self.tracking && !self.dragging)
         s = CGPointMake(s.x, self.contentSize.height - self.frame.size.height);
     
@@ -111,7 +112,7 @@
         }
         else {
             [self.placeholderColor set];
-            [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+            [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withAttributes:@{NSFontAttributeName:self.font}];
         }
     }
 }
@@ -122,5 +123,4 @@
 	
 	[self setNeedsDisplay];
 }
-
 @end
