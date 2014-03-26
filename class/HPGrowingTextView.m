@@ -88,15 +88,17 @@
     CGRect r = self.frame;
     r.origin.y = 0;
     r.origin.x = 0;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
-    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
-#else
-    internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
-#endif
+    
+    if ([internalTextView respondsToSelector:@selector(initWithFrame:textContainer:)]){
+        internalTextView = [[HPTextViewInternal alloc] initWithFrame:r textContainer:textContainer];
+    }else{
+        internalTextView = [[HPTextViewInternal alloc] initWithFrame:r];
+    }
+    
     internalTextView.delegate = self;
     internalTextView.scrollEnabled = NO;
     internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13]; 
-    internalTextView.contentInset = UIEdgeInsetsZero;		
+    internalTextView.contentInset = UIEdgeInsetsZero;
     internalTextView.showsHorizontalScrollIndicator = NO;
     internalTextView.text = @"-";
     internalTextView.contentMode = UIViewContentModeRedraw;
@@ -333,13 +335,6 @@
         [internalTextView setNeedsDisplay];
     }
     
-    
-    // scroll to caret (needed on iOS7)
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-    {
-        [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
-    }
-    
     // Tell the delegate that the text view changed
     if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
 		[delegate growingTextViewDidChange:self];
@@ -349,21 +344,20 @@
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
 - (CGFloat)measureHeight
 {
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    
+    if (sizeof(void*) == 4)
     {
-        return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
+        // Executing in a 32-bit environment
+        return [self.internalTextView sizeThatFits:CGSizeMake(self.internalTextView.frame.size.width, CGFLOAT_MAX)].height-(self.internalTextView.contentInset.top+self.internalTextView.contentInset.bottom);
     }
     else {
-        return self.internalTextView.contentSize.height;
+        if([[UIDevice currentDevice].systemVersion floatValue] >= 7.1){
+            return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
+        }
+        else{
+            return self.internalTextView.contentSize.height-5;
+        }
     }
-}
-
-- (void)resetScrollPositionForIOS7
-{
-    CGRect r = [internalTextView caretRectForPosition:internalTextView.selectedTextRange.end];
-    CGFloat caretY =  MAX(r.origin.y - internalTextView.frame.size.height + r.size.height + 8, 0);
-    if (internalTextView.contentOffset.y < caretY && r.origin.y != INFINITY)
-        internalTextView.contentOffset = CGPointMake(0, caretY);
 }
 
 -(void)resizeTextView:(NSInteger)newSizeH
@@ -384,12 +378,6 @@
 
 - (void)growDidStop
 {
-    // scroll to caret (needed on iOS7)
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-    {
-        [self resetScrollPositionForIOS7];
-    }
-    
 	if ([delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)]) {
 		[delegate growingTextView:self didChangeHeight:self.frame.size.height];
 	}
