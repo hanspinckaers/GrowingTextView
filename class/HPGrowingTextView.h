@@ -103,6 +103,9 @@
 @property(nonatomic) UIDataDetectorTypes dataDetectorTypes __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_3_0);
 @property (nonatomic) UIReturnKeyType returnKeyType;
 @property (nonatomic) UIKeyboardType keyboardType;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+@property (nonatomic) UIKeyboardAppearance keyboardAppearance;
+#endif
 @property (assign) UIEdgeInsets contentInset;
 @property (nonatomic) BOOL isScrollable;
 @property(nonatomic) BOOL enablesReturnKeyAutomatically;
