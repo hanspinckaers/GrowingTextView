@@ -111,7 +111,11 @@
         }
         else {
             [self.placeholderColor set];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
             [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+#else
+            [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withAttributes:[[NSDictionary alloc] initWithObjectsAndKeys:self.font, NSFontAttributeName,nil]];
+#endif
         }
     }
 }

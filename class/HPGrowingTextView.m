@@ -549,6 +549,21 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+
+- (void)setKeyboardAppearance:(UIKeyboardAppearance)keyAppearance
+{
+    if ([internalTextView respondsToSelector:@selector(setKeyboardAppearance:)]) {
+        internalTextView.keyboardAppearance = keyAppearance;
+    }
+}
+
+- (UIKeyboardAppearance)keyboardAppearance
+{
+    return internalTextView.keyboardAppearance;
+}
+#endif
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
 {
