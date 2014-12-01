@@ -254,6 +254,11 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     [self refreshHeight];
+
+    // Tell the delegate that the text view changed
+    if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
+        [delegate growingTextViewDidChange:self];
+    }
 }
 
 - (void)refreshHeight
@@ -340,10 +345,6 @@
         [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
     }
     
-    // Tell the delegate that the text view changed
-    if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
-		[delegate growingTextViewDidChange:self];
-	}
 }
 
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
