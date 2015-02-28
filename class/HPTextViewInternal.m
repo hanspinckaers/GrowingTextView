@@ -58,7 +58,7 @@
         
 	} else {
 
-		float bottomOffset = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom);
+		float bottomOffset = ([self measureHeight] - self.frame.size.height + self.contentInset.bottom);
 		if(s.y < bottomOffset && self.scrollEnabled){            
             UIEdgeInsets insets = self.contentInset;
             insets.bottom = 8;
@@ -67,9 +67,9 @@
         }
 	}
     
-    // Fix "overscrolling" bug
-    if (s.y > self.contentSize.height - self.frame.size.height && !self.decelerating && !self.tracking && !self.dragging)
-        s = CGPointMake(s.x, self.contentSize.height - self.frame.size.height);
+    // Fix "overscrolling" bug  + fix the "Chinese character input" bug
+    if (s.y > [self measureHeight] - self.frame.size.height && !self.decelerating && !self.tracking && !self.dragging)
+        s = CGPointMake(s.x, [self measureHeight] - self.frame.size.height);
     
 	[super setContentOffset:s];
 }
@@ -121,6 +121,18 @@
 	_placeholder = placeholder;
 	
 	[self setNeedsDisplay];
+}
+
+// Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
+- (CGFloat)measureHeight
+{
+    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    {
+        return ceilf([self sizeThatFits:self.frame.size].height);
+    }
+    else {
+        return self.contentSize.height;
+    }
 }
 
 @end

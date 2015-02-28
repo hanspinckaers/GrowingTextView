@@ -171,7 +171,7 @@
     
     internalTextView.text = newText;
     
-    maxHeight = [self measureHeight];
+    maxHeight = [internalTextView measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -208,7 +208,7 @@
     
     internalTextView.text = newText;
     
-    minHeight = [self measureHeight];
+    minHeight = [internalTextView measureHeight];
     
     internalTextView.text = saveText;
     internalTextView.hidden = NO;
@@ -259,7 +259,7 @@
 - (void)refreshHeight
 {
 	//size of content, so we can set the frame of self
-	NSInteger newSizeH = [self measureHeight];
+	NSInteger newSizeH = [internalTextView measureHeight];
 	if (newSizeH < minHeight || !internalTextView.hasText) {
         newSizeH = minHeight; //not smalles than minHeight
     }
@@ -344,18 +344,6 @@
     if ([delegate respondsToSelector:@selector(growingTextViewDidChange:)]) {
 		[delegate growingTextViewDidChange:self];
 	}
-}
-
-// Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
-- (CGFloat)measureHeight
-{
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
-    {
-        return ceilf([self.internalTextView sizeThatFits:self.internalTextView.frame.size].height);
-    }
-    else {
-        return self.internalTextView.contentSize.height;
-    }
 }
 
 - (void)resetScrollPositionForIOS7
