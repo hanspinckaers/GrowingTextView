@@ -58,8 +58,8 @@
         
 	} else {
 
-		float bottomOffset = ([self measureHeight] - self.frame.size.height + self.contentInset.bottom);
-		if(s.y < bottomOffset && self.scrollEnabled){            
+		float bottomOffset = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom);
+		if(s.y <= bottomOffset && self.scrollEnabled){
             UIEdgeInsets insets = self.contentInset;
             insets.bottom = 8;
             insets.top = 0;
@@ -68,9 +68,9 @@
 	}
     
     // Fix "overscrolling" bug  + fix the "Chinese character input" bug
-    if (s.y > [self measureHeight] - self.frame.size.height && !self.decelerating && !self.tracking && !self.dragging)
-        s = CGPointMake(s.x, [self measureHeight] - self.frame.size.height);
-    
+    if (!self.decelerating && !self.tracking && !self.dragging){
+        s = CGPointMake(s.x, self.contentSize.height - self.frame.size.height);
+    }
 	[super setContentOffset:s];
 }
 
