@@ -89,6 +89,7 @@
 @property NSTimeInterval animationDuration;
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong) UIColor *placeholderColor;
+@property (nonatomic, strong) NSAttributedString *attributedPlaceholder;
 @property (nonatomic, strong) UITextView *internalTextView;	
 
 

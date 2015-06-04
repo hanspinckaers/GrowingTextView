@@ -238,6 +238,7 @@
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [internalTextView setPlaceholder:placeholder];
+	  [internalTextView setAttributedPlaceholder:nil];
     [internalTextView setNeedsDisplay];
 }
 
@@ -249,6 +250,16 @@
 - (void)setPlaceholderColor:(UIColor *)placeholderColor 
 {
     [internalTextView setPlaceholderColor:placeholderColor];
+}
+
+- (NSAttributedString *)attributedPlaceholder {
+	  return [internalTextView attributedPlaceholder];
+}
+
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+    [internalTextView setAttributedPlaceholder:attributedPlaceholder];
+    [internalTextView setPlaceholder:nil];
+    [internalTextView setNeedsDisplay];
 }
 
 - (void)textViewDidChange:(UITextView *)textView
