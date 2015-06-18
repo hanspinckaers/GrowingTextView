@@ -425,16 +425,30 @@
 
 -(void)setText:(NSString *)newText
 {
-    internalTextView.text = newText;
-    
-    // include this line to analyze the height of the textview.
-    // fix from Ankit Thakur
-    [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
+  internalTextView.text = newText;
+
+  // include this line to analyze the height of the textview.
+  // fix from Ankit Thakur
+  [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
 }
 
 -(NSString*) text
 {
-    return internalTextView.text;
+  return internalTextView.text;
+}
+
+-(void)setAttributedText:(NSAttributedString *)newText
+{
+  internalTextView.attributedText = newText;
+
+  // include this line to analyze the height of the textview.
+  // fix from Ankit Thakur
+  [self performSelector:@selector(textViewDidChange:) withObject:internalTextView];
+}
+
+-(NSAttributedString*) attributedText
+{
+  return internalTextView.attributedText ?: [[NSAttributedString alloc] initWithString:self.text];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
