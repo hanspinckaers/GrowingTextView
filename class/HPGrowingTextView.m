@@ -502,6 +502,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (void)setInputView:(UIView *)inputView{
+    internalTextView.inputView = inputView;
+}
+
+- (UIView *)inputView{
+    return internalTextView.inputView;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void)setIsScrollable:(BOOL)isScrollable
 {
     internalTextView.scrollEnabled = isScrollable;
