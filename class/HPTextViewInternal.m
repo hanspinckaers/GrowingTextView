@@ -111,7 +111,15 @@
         }
         else {
             [self.placeholderColor set];
-            [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+            CGRect rect = CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f);
+            if ([self.placeholder respondsToSelector:@selector(drawInRect:withAttributes:)]) {
+                [self.placeholder drawInRect:rect withAttributes:@{NSFontAttributeName: self.font}];
+            } else {
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                [self.placeholder drawInRect:rect withFont:self.font];
+                #pragma clang diagnostic pop
+            }
         }
     }
 }
