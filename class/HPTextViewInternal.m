@@ -105,13 +105,31 @@
     {
         if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
         {
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.alignment = self.textAlignment;
-            [self.placeholder drawInRect:CGRectMake(5, 8 + self.contentInset.top, self.frame.size.width-self.contentInset.left, self.frame.size.height- self.contentInset.top) withAttributes:@{NSFontAttributeName:self.font, NSForegroundColorAttributeName:self.placeholderColor, NSParagraphStyleAttributeName:paragraphStyle}];
+            if (@available(iOS 7.0, *)) {
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.alignment = self.textAlignment;
+                [self.placeholder drawInRect:CGRectMake(self.textContainerInset.left + 5, self.textContainerInset.top + self.contentInset.top, self.frame.size.width-self.contentInset.left - self.textContainerInset.left - 5, self.frame.size.height - self.contentInset.top - self.textContainerInset.top) withAttributes:@{NSFontAttributeName:self.font, NSForegroundColorAttributeName:self.placeholderColor, NSParagraphStyleAttributeName:paragraphStyle}];
+            } else {
+                // Fallback on earlier versions
+            }
         }
         else {
             [self.placeholderColor set];
-            [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+            if (@available(iOS 7.0, *)) {
+                CGFloat textContainerInsetLeft = self.textContainerInset.left;
+                if (textContainerInsetLeft == 0.f) {
+                    textContainerInsetLeft = 8.f;
+                }
+                
+                CGFloat textContainerInsetRight = self.textContainerInset.right;
+                if (textContainerInsetRight == 0.f) {
+                    textContainerInsetRight = 8.f;
+                }
+                
+                [self.placeholder drawInRect:CGRectMake(textContainerInsetLeft, self.textContainerInset.top, self.frame.size.width - textContainerInsetLeft - textContainerInsetRight, self.frame.size.height - self.textContainerInset.top - self.textContainerInset.bottom) withFont:self.font];
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 }
